@@ -1,0 +1,99 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'application'
+
+version = '0.0.3-release'
+group = 'com.cls.java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+	url 'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
+    mavenCentral()
+    maven {
+        url 'http://112.74.181.24:8031/artifactory/cls-release'
+    }
+    maven {
+        url 'http://112.74.181.24:8031/artifactory/cls-java-3rd-local'
+    }
+    maven {
+        url 'http://112.74.181.24:8031/artifactory/cls-java-private-release'
+    }
+}
+
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+    compile.exclude module: 'slf4j-log4j12'
+}
+
+dependencies {
+    compile 'com.cls.java:raptor-core:1.1.4'
+    compile 'org.mybatis.generator:mybatis-generator-core:1.3.2'
+    compile 'com.alibaba:fastjson:1.1.43'
+}
+
+jar {
+    from("shell") {
+        into 'bin'
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+tasks.withType(Tar){
+    compression = Compression.GZIP
+    archiveName = baseName + "-" + version + "." + extension
+    def file = configurations.runtime.filter { it.name.contains ('raptor-core') }.singleFile
+    from ({ zipTree(file).matching{include "bin/*.sh"} }) {
+        into baseName + "-" + version
+    }
+    from ("shell") {
+        into baseName + "-" + version +"/bin"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.getByName("startScripts") {
+    enabled = false
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'http://112.74.181.24:8031/artifactory/cls-release'
+            credentials {
+                username 'admin'
+                password 'admin'
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+        tar(MavenPublication) {
+            artifact distTar
+        }
+    }
+}
+

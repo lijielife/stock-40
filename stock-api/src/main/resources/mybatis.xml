@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="defaultStatementTimeout" value="5" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="User" type="com.youku.java.copyright.bean.User" />
+		<typeAlias alias="Good" type="com.youku.java.copyright.bean.Good" />
+	</typeAliases>
+	
+<!--     <plugins> -->
+<!--         <plugin interceptor="com.youku.java.raptor.aspect.MybatisInterceptor"> -->
+<!--         </plugin> -->
+<!--     </plugins> -->
+
+	<mappers>
+		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/GoodMapper.xml" />
+	</mappers>
+
+</configuration>
+

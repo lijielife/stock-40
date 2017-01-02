@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.UserMapper">
+
+	<resultMap id="userMap" type="User">
+		<result property="id" column="pk_id" />
+		<result property="name" column="name" />
+		<result property="mobile" column="mobile" />
+		<result property="password" column="password" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+    
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_user(
+			`name`, `mobile`, `password`, `create_time`) 
+		VALUES(
+			#{name}, #{mobile}, #{password}, #{createTime})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_user(
+			`name`, `mobile`, `password`, `create_time`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{item.name}, #{item.mobile}, #{item.password}, #{item.createTime})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="User">
+		UPDATE t_user
+		SET `name` = #{name},
+		`mobile` = #{mobile},
+		`password` = #{password}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="userMap">
+		SELECT * 
+		FROM t_user
+		WHERE pk_id = #{id}
+	</select>
+	
+	<select id="selectListByPage" parameterType="Map" resultMap="userMap">
+        SELECT * 
+        FROM t_user
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="userMap">
+        SELECT * 
+        FROM t_user
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_user
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_user
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_user
+    </delete>
+
+	<select id="selectByMobile" parameterType="Map" resultMap="userMap">
+		SELECT * 
+		FROM t_user
+		WHERE `mobile` = #{mobile}
+	</select>
+	
+</mapper>

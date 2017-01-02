@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.TestMapper">
+
+	<resultMap id="testMap" type="Log">
+		<result property="id" column="pk_id" />
+		<result property="testId" column="fk_test_id" />
+	</resultMap>
+    
+    <insert id="insert" parameterType="Log" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_log(
+			`fk_test_id`) 
+		VALUES(
+			#{testId})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_log(
+			`fk_test_id`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{item.testId})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="Log">
+		UPDATE t_log
+		SET `fk_test_id` = #{testId}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="testMap">
+		SELECT * 
+		FROM t_log
+		WHERE pk_id = #{id}
+	</select>
+	
+	<select id="selectListByPage" parameterType="Map" resultMap="testMap">
+        SELECT * 
+        FROM t_log
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="testMap">
+        SELECT * 
+        FROM t_log
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_log
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_log
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_log
+    </delete>
+	
+</mapper>

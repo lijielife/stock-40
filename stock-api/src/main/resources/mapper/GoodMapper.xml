@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.GoodMapper">
+
+	<resultMap id="goodMap" type="Good">
+		<result property="id" column="pk_id" />
+		<result property="name" column="name" />
+		<result property="companyId" column="fk_company_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+    
+    <insert id="insert" parameterType="Good" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_good(
+			`name`, `fk_company_id`, `create_time`) 
+		VALUES(
+			#{name}, #{companyId}, #{createTime})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_good(
+			`name`, `fk_company_id`, `password`, `create_time`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{item.name}, #{item.companyId}, #{item.createTime})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="Good">
+		UPDATE t_good
+		SET `name` = #{name},
+		`fk_company_id` = #{companyId}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="goodMap">
+		SELECT * 
+		FROM t_good
+		WHERE pk_id = #{id}
+	</select>
+
+	<select id="selectListByPage" parameterType="Map" resultMap="goodMap">
+        SELECT * 
+        FROM t_good
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="goodMap">
+        SELECT * 
+        FROM t_good
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_good
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_good
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_good
+    </delete>
+
+	<select id="selectByName" parameterType="Map" resultMap="goodMap">
+        SELECT * 
+        FROM t_good
+        where fk_company_id = #{companyId} 
+        and name = #{name}
+    </select>
+
+	<select id="selectByNameLike" parameterType="Map" resultMap="goodMap">
+        SELECT * 
+        FROM t_good
+        where fk_company_id = #{companyId} 
+        and name like "%'#{name}'%"
+    </select>
+
+	<select id="selectByCompanyId" parameterType="Map" resultMap="goodMap">
+        SELECT * 
+        FROM t_good
+        where fk_company_id = #{companyId} 
+        limit #{limit}
+        offset #{offset}
+    </select>
+
+	<select id="countByCompanyId" parameterType="Map" resultType="Integer">
+        SELECT count(1) 
+        FROM t_good
+        where fk_company_id = #{companyId} 
+    </select>
+	
+</mapper>
