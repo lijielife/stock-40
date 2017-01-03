@@ -96,12 +96,14 @@
         FROM t_good
         where fk_user_id = #{userId} 
         and name like CONCAT('%', '${name}', '%')
+        limit #{limit}
     </select>
 
 	<select id="selectByUserId" parameterType="Map" resultMap="goodMap">
         SELECT * 
         FROM t_good
         where fk_user_id = #{userId} 
+        order by pk_id desc
         limit #{limit}
         offset #{offset}
     </select>

@@ -30,8 +30,8 @@ public class GoodService {
 		return goodMapper.selectByName(userId, name);
 	}
 	
-	public List<Good> selectByNameLike(long userId, String name) {
-		return goodMapper.selectByNameLike(userId, name);
+	public List<Good> selectByNameLike(long userId, String name, int limit) {
+		return goodMapper.selectByNameLike(userId, name, limit);
 	}
 	
 	public void delete(long id, User loginInfo) {

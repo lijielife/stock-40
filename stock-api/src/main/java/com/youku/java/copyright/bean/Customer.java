@@ -43,6 +43,10 @@ public class Customer{
 	@Note(name="备注")
 	@IsString(minLength=0,maxLength=255)
 	private String remark;
+	
+	@Note(name="用户ID")
+	@IsInt(min=0,max=Long.MAX_VALUE)
+	private Long userId ;
 
 	@Note(name="创建时间")
 	@JSONField (format="yyyy-MM-dd HH:mm:ss")
@@ -95,6 +99,14 @@ public class Customer{
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public Date getCreateTime() {

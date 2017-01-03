@@ -3,6 +3,7 @@ package com.youku.java.copyright.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.youku.java.copyright.service.CustomerService;
 import com.youku.java.copyright.service.GoodService;
 import com.youku.java.copyright.service.LogService;
 import com.youku.java.copyright.service.UserService;
@@ -20,6 +21,9 @@ public class BaseController {
 	
 	@Autowired
 	GoodService goodService;
+	
+	@Autowired
+	CustomerService customerService;
 	
 	@Autowired
 	LogService logService;

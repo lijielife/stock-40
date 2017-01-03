@@ -12,23 +12,24 @@
 		<result property="mobile" column="mobile" />
 		<result property="company" column="company" />
 		<result property="remark" column="remark" />
+		<result property="userId" column="fk_user_id" />
 		<result property="createTime" column="create_time" />
 		
 	</resultMap>
     
     <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_customer(
-			`type`, `name`, `mobile`, `company`, `remark`, `create_time`) 
+			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`) 
 		VALUES(
-			#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{createTime})
+			#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime})
 	</insert>
 	
 	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_customer(
-			`type`, `name`, `mobile`, `company`, `remark`, `create_time`) 
+			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`) 
 		VALUES
 		<foreach collection="list" item="item" index="index" separator="," > 
-			(#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{createTime})
+			(#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime})
 		</foreach>
 	</insert>
 
@@ -38,7 +39,8 @@
 		`name` = #{name},
 		`mobile` = #{mobile},
 		`company` = #{company},
-		`remark` = #{remark}
+		`remark` = #{remark},
+		`fk_user_id` = #{userId}
 		WHERE pk_id = #{id}
 	</update>
 
@@ -82,5 +84,30 @@
 	<delete id="deleteAll">
 		delete from t_customer
     </delete>
+
+	<select id="selectByMobile" parameterType="Map" resultMap="customerMap">
+		SELECT * 
+		FROM t_customer
+		WHERE `fk_user_id` = #{userId}
+		and `type` = #{type}
+		and `mobile` = #{mobile}
+	</select>
+	
+	<select id="selectByType" parameterType="Map" resultMap="customerMap">
+        SELECT * 
+        FROM t_customer
+        where `fk_user_id` = #{userId}
+        and `type` = #{type}
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+	
+	<select id="countByType" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_customer
+        where `fk_user_id` = #{userId}
+        and `type` = #{type}
+    </select>
 
 </mapper>
