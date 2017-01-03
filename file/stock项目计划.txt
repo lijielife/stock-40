@@ -2,12 +2,10 @@ stock项目计划
 
 
 t_user 用户表
-t_company 用户公司
 t_good 商品
-t_repertory 库存
 t_customer 客户表
-t_stock 进货记录
-t_sell 销售记录
+t_record 进货，销售，退回记录
+t_stat_user 统计每天每月的产品费用，其他费用，销售额，折损费用，利润
 
 
 1: 首页，介绍，联系我们 ／项目演示（图片展示），文字介绍（9行），联系我们微信号
