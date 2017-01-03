@@ -11,6 +11,14 @@
 		<result property="mobile" column="mobile" />
 		<result property="password" column="password" />
 		<result property="createTime" column="create_time" />
+		
+		<!-- 仅同步数据，并展示 -->
+		<result property="stockPrice" column="stock_price" />
+		<result property="productionPrice" column="production_price" />
+		<result property="otherPrice" column="other_price" />
+		<result property="sellPrice" column="sell_price" />
+		<result property="damagePrice" column="damage_price" />
+		<result property="profitPrice" column="profit_price" />
 	</resultMap>
     
     <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">

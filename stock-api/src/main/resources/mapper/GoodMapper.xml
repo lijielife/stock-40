@@ -8,30 +8,38 @@
 	<resultMap id="goodMap" type="Good">
 		<result property="id" column="pk_id" />
 		<result property="name" column="name" />
-		<result property="companyId" column="fk_company_id" />
+		<result property="userId" column="fk_user_id" />
+		<result property="number" column="number" />
+		<result property="unitPrice" column="unit_price" />
+		<result property="recordId" column="fk_record_id" />
+		<result property="stockNumber" column="stock_number" />
 		<result property="createTime" column="create_time" />
 	</resultMap>
     
     <insert id="insert" parameterType="Good" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_good(
-			`name`, `fk_company_id`, `create_time`) 
+			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, `create_time`) 
 		VALUES(
-			#{name}, #{companyId}, #{createTime})
+			#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, #{createTime})
 	</insert>
 	
 	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_good(
-			`name`, `fk_company_id`, `password`, `create_time`) 
+			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, `create_time`) 
 		VALUES
 		<foreach collection="list" item="item" index="index" separator="," > 
-			(#{item.name}, #{item.companyId}, #{item.createTime})
+			(#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, #{createTime})
 		</foreach>
 	</insert>
 
 	<update id="update" parameterType="Good">
 		UPDATE t_good
 		SET `name` = #{name},
-		`fk_company_id` = #{companyId}
+		`fk_user_id` = #{userId},
+		`number` = #{number},
+		`unit_price` = #{unitPrice},
+		`fk_record_id` = #{recordId},
+		`stock_number` = #{stockNumber}
 		WHERE pk_id = #{id}
 	</update>
 
@@ -79,29 +87,29 @@
 	<select id="selectByName" parameterType="Map" resultMap="goodMap">
         SELECT * 
         FROM t_good
-        where fk_company_id = #{companyId} 
+        where fk_user_id = #{userId} 
         and name = #{name}
     </select>
 
 	<select id="selectByNameLike" parameterType="Map" resultMap="goodMap">
         SELECT * 
         FROM t_good
-        where fk_company_id = #{companyId} 
-        and name like "%'#{name}'%"
+        where fk_user_id = #{userId} 
+        and name like CONCAT('%', '${name}', '%')
     </select>
 
-	<select id="selectByCompanyId" parameterType="Map" resultMap="goodMap">
+	<select id="selectByUserId" parameterType="Map" resultMap="goodMap">
         SELECT * 
         FROM t_good
-        where fk_company_id = #{companyId} 
+        where fk_user_id = #{userId} 
         limit #{limit}
         offset #{offset}
     </select>
 
-	<select id="countByCompanyId" parameterType="Map" resultType="Integer">
+	<select id="countByUserId" parameterType="Map" resultType="Integer">
         SELECT count(1) 
         FROM t_good
-        where fk_company_id = #{companyId} 
+        where fk_user_id = #{userId} 
     </select>
 	
 </mapper>

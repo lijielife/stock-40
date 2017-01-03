@@ -153,6 +153,8 @@ public class CommonUtil {
 							setMethod.invoke(obj,0);	
 						}else if(field.getType() == Boolean.class){
 							setMethod.invoke(obj,false);	
+						}else if(field.getType() == Double.class){
+							setMethod.invoke(obj,0.0);	
 						}else if(field.getType() == Date.class){
 							try{
 								setMethod.invoke(obj,DateTool.standardSdf().parse("1970-01-01 08:00:00"));	

@@ -14,15 +14,19 @@ import com.youku.java.raptor.validation.IsInt;
 import com.youku.java.raptor.validation.IsString;
 
 /**
- * 用户
+ * 客户
  * @author chenlisong
  *
  */
-public class User{
+public class Customer{
 	
 	@Note(name="主键ID")
 	@IsInt(min=0,max=Long.MAX_VALUE)
 	private Long id ;
+
+	@Note(name="类型")
+	@IsInt(min=1, max=3)
+	private Integer type;
 
 	@Note(name="名称")
 	@IsString(minLength=0,maxLength=15)
@@ -32,26 +36,18 @@ public class User{
 	@IsString(minLength=11,maxLength=11)
 	private String mobile;
 
-	@Note(name="密码")
+	@Note(name="公司")
 	@IsString(minLength=0,maxLength=31)
-	private String password;
+	private String company;
+
+	@Note(name="备注")
+	@IsString(minLength=0,maxLength=255)
+	private String remark;
 
 	@Note(name="创建时间")
 	@JSONField (format="yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date createTime;
-	
-	private Double stockPrice;
-	
-	private Double productionPrice;
-	
-	private Double otherPrice;
-	
-	private Double sellPrice;
-	
-	private Double damagePrice;
-	
-	private Double profitPrice;
 	
 	public Long getId() {
 		return id;
@@ -59,6 +55,14 @@ public class User{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public String getName() {
@@ -77,64 +81,24 @@ public class User{
 		this.mobile = mobile;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public Date getCreateTime() {
 		return createTime;
-	}
-
-	public Double getStockPrice() {
-		return stockPrice;
-	}
-
-	public void setStockPrice(Double stockPrice) {
-		this.stockPrice = stockPrice;
-	}
-
-	public Double getProductionPrice() {
-		return productionPrice;
-	}
-
-	public void setProductionPrice(Double productionPrice) {
-		this.productionPrice = productionPrice;
-	}
-
-	public Double getOtherPrice() {
-		return otherPrice;
-	}
-
-	public void setOtherPrice(Double otherPrice) {
-		this.otherPrice = otherPrice;
-	}
-
-	public Double getSellPrice() {
-		return sellPrice;
-	}
-
-	public void setSellPrice(Double sellPrice) {
-		this.sellPrice = sellPrice;
-	}
-
-	public Double getDamagePrice() {
-		return damagePrice;
-	}
-
-	public void setDamagePrice(Double damagePrice) {
-		this.damagePrice = damagePrice;
-	}
-
-	public Double getProfitPrice() {
-		return profitPrice;
-	}
-
-	public void setProfitPrice(Double profitPrice) {
-		this.profitPrice = profitPrice;
 	}
 
 	public void setCreateTime(String createTime) {

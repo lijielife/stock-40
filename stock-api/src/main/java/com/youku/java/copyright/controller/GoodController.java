@@ -59,10 +59,10 @@ public class GoodController extends BaseController{
 		Map<String,Object> result = new HashMap<String, Object>();
 		
 		if(name != null && !"".equals(name)) {
-			result.put("data", goodService.selectByNameLike(loginInfo.getCompanyId(), name));
+			result.put("data", goodService.selectByNameLike(loginInfo.getId(), name));
 		}else if(page > 0 && pageSize > 0) {
-			result.put("data", goodService.selectByCompanyId(loginInfo.getCompanyId(), page, pageSize));
-			result.put("total", goodService.countByCompanyId(loginInfo.getCompanyId()));
+			result.put("data", goodService.selectByUserId(loginInfo.getId(), page, pageSize));
+			result.put("total", goodService.countByUserId(loginInfo.getId()));
 			result.put("page", page);
 			result.put("pageSize", pageSize);
 		}else {

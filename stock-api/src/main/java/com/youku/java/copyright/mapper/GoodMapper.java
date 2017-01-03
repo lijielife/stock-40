@@ -10,12 +10,12 @@ import com.youku.java.copyright.bean.Good;
 
 public interface GoodMapper extends MapperI<Good>{
 	
-	public Good selectByName(@Param("companyId")long companyId, @Param("name")String name);
+	public Good selectByName(@Param("userId")long userId, @Param("name")String name);
 	
-	public List<Good> selectByNameLike(@Param("companyId")long companyId, @Param("name")String name);
+	public List<Good> selectByNameLike(@Param("userId")long userId, @Param("name")String name);
 	
-	public List<Good> selectByCompanyId(@Param("companyId")long companyId, @Param("limit")int limit, @Param("offset")int offset);
+	public List<Good> selectByUserId(@Param("userId")long userId, @Param("limit")int limit, @Param("offset")int offset);
 	
-	public int countByCompanyId(@Param("companyId")long companyId);
+	public int countByUserId(@Param("userId")long userId);
 	
 }

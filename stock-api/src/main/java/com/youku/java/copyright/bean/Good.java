@@ -28,8 +28,22 @@ public class Good{
 	@IsString(minLength=0,maxLength=31)
 	private String name;
 	
-	@Note(name="公司id")
-	private Long companyId;
+	@Note(name="用户id")
+	private Long userId;
+	
+	@Note(name="数量")
+	@IsInt(min=0, max=Integer.MAX_VALUE)
+	private Integer number;
+	
+	@Note(name="单价")
+	private Double unitPrice;
+	
+	@Note(name="进货记录ID")
+	private Long recordId;
+	
+	@Note(name="批次剩余数量")
+	@IsInt(min=0, max=Integer.MAX_VALUE)
+	private Integer stockNumber;
 
 	@Note(name="创建时间")
 	@JSONField (format="yyyy-MM-dd HH:mm:ss")
@@ -52,12 +66,44 @@ public class Good{
 		this.name = name;
 	}
 
-	public Long getCompanyId() {
-		return companyId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public Long getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(Long recordId) {
+		this.recordId = recordId;
+	}
+
+	public Integer getStockNumber() {
+		return stockNumber;
+	}
+
+	public void setStockNumber(Integer stockNumber) {
+		this.stockNumber = stockNumber;
 	}
 
 	public Date getCreateTime() {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.CustomerMapper">
+
+	<resultMap id="customerMap" type="Customer">
+		<result property="id" column="pk_id" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="mobile" column="mobile" />
+		<result property="company" column="company" />
+		<result property="remark" column="remark" />
+		<result property="createTime" column="create_time" />
+		
+	</resultMap>
+    
+    <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_customer(
+			`type`, `name`, `mobile`, `company`, `remark`, `create_time`) 
+		VALUES(
+			#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{createTime})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_customer(
+			`type`, `name`, `mobile`, `company`, `remark`, `create_time`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{createTime})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="Customer">
+		UPDATE t_customer
+		SET `type` = #{type},
+		`name` = #{name},
+		`mobile` = #{mobile},
+		`company` = #{company},
+		`remark` = #{remark}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="customerMap">
+		SELECT * 
+		FROM t_customer
+		WHERE pk_id = #{id}
+	</select>
+	
+	<select id="selectListByPage" parameterType="Map" resultMap="customerMap">
+        SELECT * 
+        FROM t_customer
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="customerMap">
+        SELECT * 
+        FROM t_customer
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_customer
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_customer
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_customer
+    </delete>
+
+</mapper>

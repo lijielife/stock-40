@@ -26,12 +26,12 @@ public class GoodService {
 		return goodMapper.selectOne(id);
 	}
 	
-	public Good selectByName(long companyId, String name) {
-		return goodMapper.selectByName(companyId, name);
+	public Good selectByName(long userId, String name) {
+		return goodMapper.selectByName(userId, name);
 	}
 	
-	public List<Good> selectByNameLike(long companyId, String name) {
-		return goodMapper.selectByNameLike(companyId, name);
+	public List<Good> selectByNameLike(long userId, String name) {
+		return goodMapper.selectByNameLike(userId, name);
 	}
 	
 	public void delete(long id, User loginInfo) {
@@ -40,7 +40,7 @@ public class GoodService {
 			throw new InvalidArgumentException("找不到的商品");
 		}
 		
-		if(loginInfo.getCompanyId().longValue() != good.getCompanyId().longValue()) {
+		if(loginInfo.getId().longValue() != good.getUserId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
 		
@@ -49,7 +49,7 @@ public class GoodService {
 	
 	public void update(Good good, User loginInfo) {
 		Good src = selectOne(good.getId());
-		if(src.getCompanyId().longValue() != loginInfo.getCompanyId().longValue()) {
+		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
 		try{
@@ -60,21 +60,21 @@ public class GoodService {
 		goodMapper.update(src);
 	}
 	
-	public List<Good> selectByCompanyId(long companyId, int page, int pageSize) {
-		return goodMapper.selectByCompanyId(companyId, pageSize, (page-1)*pageSize);
+	public List<Good> selectByUserId(long userId, int page, int pageSize) {
+		return goodMapper.selectByUserId(userId, pageSize, (page-1)*pageSize);
 	}
 	
-	public int countByCompanyId(long companyId) {
-		return goodMapper.countByCompanyId(companyId);
+	public int countByUserId(long userId) {
+		return goodMapper.countByUserId(userId);
 	}
 
 	public long insert(Good good, User loginInfo) {
-		Good src = selectByName(loginInfo.getCompanyId(), good.getName());
+		Good src = selectByName(loginInfo.getId(), good.getName());
 		if(src != null) {
 			throw new DataExistException("该商品已存在");
 		}
 		
-		good.setCompanyId(loginInfo.getCompanyId());
+		good.setUserId(loginInfo.getId());
 		good.setCreateTime(DateTool.standardSdf().format(new Date()));
 		CommonUtil.setDefaultValue(good);
 		return goodMapper.insert(good);

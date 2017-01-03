@@ -49,6 +49,15 @@ public class UserController extends BaseController{
 		return result;
 	}
 
+	@RequestMapping(value = "/users/stat", method = RequestMethod.GET)
+	@NeedLogin
+	public Object userQuery(User loginInfo){
+		Map<String,Object> result = new HashMap<String, Object>();
+		User user = userService.selectByMobile(loginInfo.getMobile());
+		result.put("data", new UserView(user, "stat"));
+		return result;
+	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public Object login(@RequestBody String body){
@@ -64,7 +73,7 @@ public class UserController extends BaseController{
 		}
 		
 		Map<String,Object> result = new HashMap<String, Object>();
-		result.put("loginInfo", new UserView(loginInfo));
+		result.put("loginInfo", new UserView(loginInfo, "loginInfo"));
 		result.put("ticket", ticket);
 		return result;
 	}
@@ -75,7 +84,7 @@ public class UserController extends BaseController{
 	@NeedLogin
 	public Object loginInfo(User loginInfo){
 		Map<String,Object> result = new HashMap<String, Object>();
-		result.put("loginInfo", new UserView(loginInfo));
+		result.put("loginInfo", new UserView(loginInfo, "loginInfo"));
 		return result;
 	}
 }
