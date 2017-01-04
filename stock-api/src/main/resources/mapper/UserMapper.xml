@@ -13,7 +13,6 @@
 		<result property="createTime" column="create_time" />
 		
 		<!-- 仅同步数据，并展示 -->
-		<result property="stockPrice" column="stock_price" />
 		<result property="productionPrice" column="production_price" />
 		<result property="otherPrice" column="other_price" />
 		<result property="sellPrice" column="sell_price" />
@@ -91,5 +90,15 @@
 		FROM t_user
 		WHERE `mobile` = #{mobile}
 	</select>
+
+	<update id="updatePrice" parameterType="User">
+		UPDATE t_user
+		SET `production_price` = `production_price` + #{productionPrice},
+		`other_price` = `other_price` + #{otherPrice},
+		`sell_price` = `sell_price` + #{sellPrice},
+		`profit_price` = `profit_price` + #{profitPrice},
+		`damage_price` = `damage_price` + #{damagePrice}
+		WHERE pk_id = #{id}
+	</update>
 	
 </mapper>

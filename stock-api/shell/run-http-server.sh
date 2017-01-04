@@ -6,7 +6,8 @@ MODE=http-server
 
 source $BIN_PATH/config.sh
 
-JVMOPTS="-server -Xms1g -Xmx2g -XX:NewSize=512m -Xss512k -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
+#JVMOPTS="-server -Xms1g -Xmx2g -XX:NewSize=512m -Xss512k -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
+JVMOPTS="-server -Xms512m -Xmx1g -XX:NewSize=256m -Xss256k -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
 JVMARGS="-Dmode=$MODE -Dserver.port=$HTTP_PORT"
 
 source $BIN_PATH/common.sh

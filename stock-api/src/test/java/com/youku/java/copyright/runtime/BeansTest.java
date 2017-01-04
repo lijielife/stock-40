@@ -32,8 +32,8 @@ import com.youku.java.copyright.util.Config;
 @EnableTransactionManagement
 @EnableScheduling
 @PropertySources({
-    @PropertySource(value = "classpath:stock.properties"),
-    @PropertySource(value = "file:etc/stock.properties", ignoreResourceNotFound=true)
+    @PropertySource(value = "classpath:stock-api.properties"),
+    @PropertySource(value = "file:etc/stock-api.properties", ignoreResourceNotFound=true)
 })
 @ComponentScan(basePackages = {
         "com.youku.java.raptor.aspect",

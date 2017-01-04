@@ -25,6 +25,15 @@ public class Constant {
 		
 	}
 	
+	public static class RecordType {
+		
+		public static final int STOCK = 1;
+		
+		public static final int SELL = 2;
+		
+		public static final int DAMAGE = 3;
+	}
+	
 	public static class RedisNameSpace {
 		public static final String NAMESPACE = "stock";
 		

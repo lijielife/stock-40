@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.youku.java.copyright.bean.Good;
 import com.youku.java.copyright.bean.User;
@@ -16,6 +17,7 @@ import com.youku.java.copyright.util.DateTool;
 import com.youku.java.copyright.util.MergerUtil;
 import com.youku.java.raptor.exception.InvalidArgumentException;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class GoodService {
 
@@ -78,5 +80,17 @@ public class GoodService {
 		good.setCreateTime(DateTool.standardSdf().format(new Date()));
 		CommonUtil.setDefaultValue(good);
 		return goodMapper.insert(good);
+	}
+	
+	public int updateNumber(long id, int number, long recordId) {
+		int update = goodMapper.updateNumber(id, number);
+		if(update <= 0) {
+			update = updateNumberRecord(id, number, recordId);
+		}
+		return update;
+	}
+	
+	private int updateNumberRecord(long id, int number, long recordId) {
+		return goodMapper.updateNumberRecord(id, number, recordId);
 	}
 }

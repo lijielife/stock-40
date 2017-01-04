@@ -14,21 +14,27 @@
 		<result property="recordId" column="fk_record_id" />
 		<result property="stockNumber" column="stock_number" />
 		<result property="createTime" column="create_time" />
+		<result property="sellNumber" column="sell_number" />
+		<result property="profitPrice" column="profit_price" />
 	</resultMap>
     
     <insert id="insert" parameterType="Good" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_good(
-			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, `create_time`) 
+			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, 
+			`create_time`, `sell_number`, `profit_price`) 
 		VALUES(
-			#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, #{createTime})
+			#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, 
+			#{createTime}, #{sellNumber}, #{profitPrice})
 	</insert>
 	
 	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_good(
-			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, `create_time`) 
+			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, 
+			`create_time`, `sell_number`, `profit_price`) 
 		VALUES
 		<foreach collection="list" item="item" index="index" separator="," > 
-			(#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, #{createTime})
+			(#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, 
+			#{createTime}, #{sellNumber}, #{profitPrice})
 		</foreach>
 	</insert>
 
@@ -39,7 +45,9 @@
 		`number` = #{number},
 		`unit_price` = #{unitPrice},
 		`fk_record_id` = #{recordId},
-		`stock_number` = #{stockNumber}
+		`stock_number` = #{stockNumber},
+		`sell_number` = #{sellNumber},
+		`profit_price` = #{profitPrice}
 		WHERE pk_id = #{id}
 	</update>
 
@@ -113,5 +121,20 @@
         FROM t_good
         where fk_user_id = #{userId} 
     </select>
+
+	<update id="updateNumber" parameterType="Good">
+		UPDATE t_good
+		SET `number` = `number` + #{number}
+		WHERE pk_id = #{id}
+		and stock_number &gt; 0
+	</update>
+
+	<update id="updateNumberRecord" parameterType="Good">
+		UPDATE t_good
+		SET `number` = `number` + #{number},
+		`fk_record_id` = #{recordId},
+		`stock_number` = #{number}
+		WHERE pk_id = #{id}
+	</update>
 	
 </mapper>

@@ -38,6 +38,12 @@ public class Good{
 	@Note(name="单价")
 	private Double unitPrice;
 	
+	@Note(name="售出总数")
+	private Integer sellNumber;
+	
+	@Note(name="总利润")
+	private Double profitPrice;
+	
 	@Note(name="进货记录ID")
 	private Long recordId;
 	
@@ -104,6 +110,22 @@ public class Good{
 
 	public void setStockNumber(Integer stockNumber) {
 		this.stockNumber = stockNumber;
+	}
+
+	public Double getProfitPrice() {
+		return profitPrice;
+	}
+
+	public void setProfitPrice(Double profitPrice) {
+		this.profitPrice = profitPrice;
+	}
+
+	public Integer getSellNumber() {
+		return sellNumber;
+	}
+
+	public void setSellNumber(Integer sellNumber) {
+		this.sellNumber = sellNumber;
 	}
 
 	public Date getCreateTime() {

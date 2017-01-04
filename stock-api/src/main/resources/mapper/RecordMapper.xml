@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.RecordMapper">
+
+	<resultMap id="recordMap" type="Record">
+		<result property="id" column="pk_id" />
+		<result property="type" column="type" />
+		<result property="customerId" column="fk_customer_id" />
+		<result property="goodId" column="fk_good_id" />
+		<result property="number" column="number" />
+		<result property="productionPrice" column="production_price" />
+		<result property="otherPrice" column="other_price" />
+		<result property="damagePrice" column="damage_price" />
+		<result property="sellPrice" column="sell_price" />
+		<result property="profitPrice" column="profit_price" />
+		<result property="userId" column="fk_user_id" />
+		<result property="createTime" column="create_time" />
+		
+	</resultMap>
+    
+    <insert id="insert" parameterType="Record" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_record(
+			`type`, `fk_customer_id`, `fk_good_id`, `number`, `production_price`, `other_price`,
+			`damage_price`, `sell_price`, `profit_price`, `fk_user_id`, `create_time`) 
+		VALUES(
+			#{type}, #{customerId}, #{goodId}, #{number}, #{productionPrice}, #{otherPrice},
+			#{damagePrice}, #{sellPrice}, #{profitPrice}, #{userId}, #{createTime})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_record(
+			`type`, `fk_customer_id`, `fk_good_id`, `number`, `production_price`, `other_price`,
+			`damage_price`, `sell_price`, `profit_price`, `fk_user_id`, `create_time`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{type}, #{customerId}, #{goodId}, #{number}, #{productionPrice}, #{otherPrice},
+			#{damagePrice}, #{sellPrice}, #{profitPrice}, #{userId}, #{createTime})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="Record">
+		UPDATE t_record
+		SET `type` = #{type},
+		`fk_customer_id` = #{customerId},
+		`fk_good_id` = #{goodId},
+		`number` = #{number},
+		`production_price` = #{productionPrice},
+		`other_price` = #{otherPrice},
+		`damage_price` = #{damagePrice},
+		`sell_price` = #{sellPrice},
+		`profit_price` = #{profitPrice},
+		`fk_user_id` = #{userId}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="recordMap">
+		SELECT * 
+		FROM t_record
+		WHERE pk_id = #{id}
+	</select>
+	
+	<select id="selectListByPage" parameterType="Map" resultMap="recordMap">
+        SELECT * 
+        FROM t_record
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="recordMap">
+        SELECT * 
+        FROM t_record
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_record
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_record
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_record
+    </delete>
+
+</mapper>

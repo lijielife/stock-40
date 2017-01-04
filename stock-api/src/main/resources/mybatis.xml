@@ -13,6 +13,7 @@
 		<typeAlias alias="User" type="com.youku.java.copyright.bean.User" />
 		<typeAlias alias="Good" type="com.youku.java.copyright.bean.Good" />
 		<typeAlias alias="Customer" type="com.youku.java.copyright.bean.Customer" />
+		<typeAlias alias="Record" type="com.youku.java.copyright.bean.Record" />
 	</typeAliases>
 	
 <!--     <plugins> -->
@@ -24,6 +25,7 @@
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/GoodMapper.xml" />
 		<mapper resource="mapper/CustomerMapper.xml" />
+		<mapper resource="mapper/RecordMapper.xml" />
 	</mappers>
 
 </configuration>
