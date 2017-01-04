@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.youku.java.copyright.bean.Customer;
 import com.youku.java.copyright.bean.Good;
 import com.youku.java.copyright.bean.User;
 import com.youku.java.copyright.exception.DataExistException;

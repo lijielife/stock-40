@@ -12,7 +12,6 @@ import com.youku.java.copyright.annotation.Note;
 import com.youku.java.raptor.exception.InvalidHttpArgumentException;
 import com.youku.java.raptor.validation.IsDouble;
 import com.youku.java.raptor.validation.IsInt;
-import com.youku.java.raptor.validation.IsString;
 
 /**
  * 记录，进货，销售，退货
