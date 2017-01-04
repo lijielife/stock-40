@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.youku.java.copyright.bean.Customer;
 import com.youku.java.copyright.bean.Good;
 import com.youku.java.copyright.bean.User;
 import com.youku.java.copyright.exception.DataExistException;
@@ -92,5 +93,12 @@ public class GoodService {
 	
 	private int updateNumberRecord(long id, int number, long recordId) {
 		return goodMapper.updateNumberRecord(id, number, recordId);
+	}
+	
+	public void checkOwner(User loginInfo, long id) {
+		Good good = selectOne(id);
+		if(good.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new InvalidArgumentException("不是该客户的拥有者");
+		}
 	}
 }

@@ -64,12 +64,6 @@ public class RecordService {
 	 * 影响商品的数量，记录ID，记录剩余数量，利润
 	 */
 	public long sell(Record record, User loginInfo) {
-		//插入记录数据
-		record.setType(RecordType.SELL);
-		record.setUserId(loginInfo.getId());
-		record.setCreateTime(DateTool.standardSdf().format(new Date()));
-		CommonUtil.setDefaultValue(record);
-		recordMapper.insert(record);
 		
 		//拿到批次进货数据
 		Good good = goodService.selectOne(record.getGoodId());
@@ -84,6 +78,14 @@ public class RecordService {
 		good.setRecordId(recordGood.getRecordId());
 		good.setStockNumber(recordGood.getStockNumber());
 		good.setProfitPrice(good.getProfitPrice() + recordGood.getProfitPrice());
+
+		//插入记录数据
+		record.setType(RecordType.SELL);
+		record.setUserId(loginInfo.getId());
+		record.setCreateTime(DateTool.standardSdf().format(new Date()));
+		record.setProfitPrice(recordGood.getProfitPrice());
+		CommonUtil.setDefaultValue(record);
+		recordMapper.insert(record);
 		
 		//影响商品数量，记录ID，记录剩余数量，销售总数，总利润
 		goodService.update(good, loginInfo);
@@ -149,7 +151,7 @@ public class RecordService {
 	}
 	
 	public List<Record> selectById(long id, long userId, int type, int limit) {
-		return null;
+		return recordMapper.selectById(id, userId, type, limit);
 	}
 	
 	
@@ -158,4 +160,28 @@ public class RecordService {
 	 * 插入记录数据
 	 * 影响用户折损费
 	 */
+	public long damage(Record record, User loginInfo) {
+		//插入记录数据
+		record.setType(RecordType.DAMAGE);
+		record.setUserId(loginInfo.getId());
+		record.setCreateTime(DateTool.standardSdf().format(new Date()));
+		CommonUtil.setDefaultValue(record);
+		recordMapper.insert(record);
+		
+		//影响用户产品费用
+		userService.updatePrice(loginInfo.getId(), 
+				0.0, 0.0, 0.0, record.getDamagePrice(), 0.0);
+		
+		return record.getId();
+	}
+	
+	public List<Record> selectByUserid(User loginInfo, int type, int page, int pageSize) {
+		return recordMapper.selectByUserid(loginInfo.getId(), type, pageSize, (page-1)*pageSize);
+	}
+	
+	public int countByUserid(User loginInfo, int type) {
+		return recordMapper.countByUserid(loginInfo.getId(), type);
+	}
+	
+	
 }

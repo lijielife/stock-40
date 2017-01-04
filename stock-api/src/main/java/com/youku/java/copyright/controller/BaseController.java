@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.youku.java.copyright.service.CustomerService;
 import com.youku.java.copyright.service.GoodService;
 import com.youku.java.copyright.service.LogService;
+import com.youku.java.copyright.service.RecordService;
 import com.youku.java.copyright.service.UserService;
 import com.youku.java.copyright.util.JedisUtil;
 import com.youku.java.raptor.auth.NeedLogin;
@@ -24,6 +25,9 @@ public class BaseController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	RecordService recordService;
 	
 	@Autowired
 	LogService logService;

@@ -38,7 +38,7 @@ configurations {
 }
 
 dependencies {
-    compile 'com.cls.java:raptor-core:1.1.5'
+    compile 'com.cls.java:raptor-core:1.1.7'
     compile 'org.mybatis.generator:mybatis-generator-core:1.3.2'
     compile 'com.alibaba:fastjson:1.1.43'
 }

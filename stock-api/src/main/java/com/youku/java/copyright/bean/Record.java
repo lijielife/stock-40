@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youku.java.copyright.annotation.Note;
 import com.youku.java.raptor.exception.InvalidHttpArgumentException;
+import com.youku.java.raptor.validation.IsDouble;
 import com.youku.java.raptor.validation.IsInt;
 import com.youku.java.raptor.validation.IsString;
 
@@ -41,27 +42,27 @@ public class Record{
 	private Long userId ;
 
 	@Note(name="数量")
-	@IsString(minLength=0,maxLength=Integer.MAX_VALUE)
+	@IsInt(min=0,max=Long.MAX_VALUE)
 	private Integer number;
 
 	@Note(name="产品价格")
-	@IsInt(min=0,max=Long.MAX_VALUE)
+	@IsDouble(min=0,max=Integer.MAX_VALUE)
 	private Double productionPrice ;
 
 	@Note(name="其他价格")
-	@IsInt(min=0,max=Long.MAX_VALUE)
+	@IsDouble(min=0,max=Integer.MAX_VALUE)
 	private Double otherPrice ;
 
 	@Note(name="折损价格")
-	@IsInt(min=0,max=Long.MAX_VALUE)
+	@IsDouble(min=0,max=Integer.MAX_VALUE)
 	private Double damagePrice ;
 
 	@Note(name="销售价格")
-	@IsInt(min=0,max=Long.MAX_VALUE)
+	@IsDouble(min=0,max=Integer.MAX_VALUE)
 	private Double sellPrice ;
 
 	@Note(name="利润")
-	@IsInt(min=0,max=Long.MAX_VALUE)
+	@IsDouble(min=0,max=Integer.MAX_VALUE)
 	private Double profitPrice ;
 
 	@Note(name="创建时间")

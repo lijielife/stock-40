@@ -23,6 +23,10 @@ public class CustomerService {
 
 	@Autowired
 	private CustomerMapper customerMapper;
+	
+	public Customer selectOne(long id) {
+		return customerMapper.selectOne(id);
+	}
 
 	public long insert(Customer customer, User loginInfo) {
 		
@@ -78,6 +82,13 @@ public class CustomerService {
 	
 	public int countByType(long userId, int type) {
 		return customerMapper.countByType(userId, type);
+	}
+	
+	public void checkOwner(User loginInfo, long id) {
+		Customer customer = selectOne(id);
+		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new InvalidArgumentException("不是该客户的拥有者");
+		}
 	}
 	
 }
