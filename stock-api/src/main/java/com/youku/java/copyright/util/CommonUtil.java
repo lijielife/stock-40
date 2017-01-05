@@ -5,10 +5,12 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -313,8 +315,8 @@ public class CommonUtil {
         BufferedWriter bw = null;
         try {
             fw = new FileWriter(file,true);
-            bw = new BufferedWriter(fw);
-            for(String str : list){
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filepath, true), "UTF-8"));
+        	for(String str : list){
             	bw.write(str);
                 bw.newLine();
             }
@@ -358,7 +360,8 @@ public class CommonUtil {
         BufferedWriter bw = null;
         try {
             fw = new FileWriter(file,true);
-            bw = new BufferedWriter(fw);
+//            bw = new BufferedWriter(fw);
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filepath, true), "UTF-8"));
         	bw.write(msg);
             bw.newLine();
             bw.flush();
