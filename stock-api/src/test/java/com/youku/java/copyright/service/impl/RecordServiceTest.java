@@ -17,7 +17,7 @@ public class RecordServiceTest {
 	@Autowired
 	RecordService recordService;
 	
-	@Test
+//	@Test
 	public void sell() {
 		User loginInfo = new User();
 		loginInfo.setId(1l);
@@ -25,11 +25,10 @@ public class RecordServiceTest {
 		Record record = new Record();
 		record.setCustomerId(1l);
 		record.setGoodId(1l);
-		record.setNumber(10);
-		record.setSellPrice(4000.0);
+		record.setNumber(20);
+		record.setSellPrice(6000.0);
 		record.setUserId(1l);
 		
-		recordService.stock(record, loginInfo);
 		recordService.sell(record, loginInfo);
 	}
 	
@@ -42,7 +41,7 @@ public class RecordServiceTest {
 		record.setCustomerId(1l);
 		record.setGoodId(1l);
 		record.setNumber(30);
-		record.setProductionPrice(6100.0);
+		record.setProductionPrice(6800.0);
 		record.setOtherPrice(45.0);
 		record.setUserId(1l);
 		

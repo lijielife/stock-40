@@ -96,5 +96,36 @@
 	<delete id="deleteAll">
 		delete from t_record
     </delete>
+	
+	<select id="selectById" parameterType="Map" resultMap="recordMap">
+        SELECT * 
+        FROM t_record
+        where `fk_user_id` = #{userId}
+        and `type` = #{type}
+        and `pk_id` > #{id}
+        LIMIT #{limit}
+    </select>
+	
+	<select id="selectByUserid" parameterType="Map" resultMap="recordMap">
+        SELECT * 
+        FROM t_record
+        where `fk_user_id` = #{userId}
+        <if test="type > 0">
+        	and `type` = #{type}
+        </if>
+        order by `pk_id` desc
+        limit #{limit}
+        offset #{offset}
+    </select>
+	
+	<select id="countByUserid" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_record
+        where `fk_user_id` = #{userId}
+        <if test="type > 0">
+        	and `type` = #{type}
+        </if>
+    </select>
+    
 
 </mapper>

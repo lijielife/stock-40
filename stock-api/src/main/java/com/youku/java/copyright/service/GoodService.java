@@ -93,4 +93,11 @@ public class GoodService {
 	private int updateNumberRecord(long id, int number, long recordId) {
 		return goodMapper.updateNumberRecord(id, number, recordId);
 	}
+	
+	public void checkOwner(User loginInfo, long id) {
+		Good good = selectOne(id);
+		if(good.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new InvalidArgumentException("不是该客户的拥有者");
+		}
+	}
 }
