@@ -24,26 +24,195 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        .register{
+            display: none;
+        }
+        .input-wrapper{
+            position: relative;
+            margin: 0;
+            overflow: hidden;
+        }
+        .error{/*登录注册*/
+            position: absolute;
+            top: 0;
+            right: 8px;
+            padding: 0 8px;
+            line-height: 39px;
+            color: #c33;
+            cursor: text;
+            margin-bottom: 0;
+            font-weight: 400;
+            visibility: hidden;
+            opacity: 0;
+            -ms-filter: "alpha(Opacity=0)";
+            -webkit-transform: translate(20px,0);
+            -ms-transform: translate(20px,0);
+            transform: translate(20px,0);
+            -webkit-transition: .25s ease-out;
+            transition: .25s ease-out;
+        }
+        label.error.is-visible {
+            visibility: visible;
+            opacity: 1;
+            -ms-filter: "alpha(Opacity=100)";
+            -webkit-transform: translate(0,0);
+            -ms-transform: translate(0,0);
+            transform: translate(0,0);
+        }
+    </style>
 </head>
 
   <body class="login-body">
 
     <div class="container">
 
-      <form class="form-signin">
+      <div class="form-signin login">
         <h2 class="form-signin-heading">登陆</h2>
         <div class="login-wrap">
-            <input type="text" class="form-control" placeholder="账号" autofocus>
-            <input type="password" class="form-control" placeholder="密码">
+            <div class="input-wrapper">
+                <input type="text" class="form-control" id="mobile" placeholder="手机号" autofocus>
+                 <label for=""></label>
+            </div>
+            <div class="input-wrapper">
+                <input type="password" class="form-control"  id="password" placeholder="密码">
+            </div>            
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> 记住我
+                <input type="checkbox" value="remember-me" id="remember"> 记住我
                 <span class="pull-right"> <a href="#"> 忘记密码？</a></span>
             </label>
-            <button class="btn btn-lg btn-login btn-block">登陆</button>
-            <button class="btn btn-lg btn-block" >注册</button>
+            <button class="btn btn-lg btn-login btn-block" id="login">登陆</button>
+            <button class="btn btn-lg btn-block" id="go-register">去注册</button>
         </div>
-      </form>
-      
+      </div>
+
+      <div class="form-signin register form-horizontal tasi-form">
+        <h2 class="form-signin-heading">注册</h2>
+        <div class="login-wrap">
+            <div class="input-wrapper">
+                <input type="text" class="form-control" id="_name" placeholder="昵称" autofocus>               
+            </div>
+            <div class="input-wrapper">
+                <input type="text" class="form-control" id="_mobile" placeholder="手机号">
+            </div>
+            <div class="input-wrapper">
+                <input type="password" class="form-control" id="_password" placeholder="密码">
+            </div>
+            <button class="btn btn-lg btn-login btn-block" id="register">注册</button>
+            <button class="btn btn-lg btn-block" id="go-login">去登陆</button>
+        </div>
+      </div>
+
     </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.cookie.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            console.log($.cookie("remember"));
+            if ($.cookie("remember") == "true") { 
+                document.getElementById('remember').checked = true;
+                /*$("#userphone").val($.cookie("usermobilephone")); 
+                $("#password").val($.cookie("userpassword")); */
+            } 
+            $("#login").click(function(){
+              login();
+            });
+            $("#register").click(function(){
+              register();
+            });
+            /*注册和登录页面相互交换*/
+            $("#go-register").click(function(){
+              $(".login").hide();
+              $(".register").show();
+            });
+            $("#go-login").click(function(){
+              $(".login").show();
+              $(".register").hide();
+            });
+            //
+            $("input").focus(function(e){
+              console.log(this);
+              console.log(this.id);
+              $(this).next().remove();
+            });
+
+        });
+        /*注册功能*/
+        function register(){
+            var _name =$("#_name").val().replace(/\s/g,"");
+            var _mobile =$("#_mobile").val().replace(/\s/g,"");
+            var _password = $("#_password").val().replace(/\s/g,"");
+            $.ajax({
+                type : "POST",
+                url : 'http://123.57.141.203:8314/users',
+                contentType: "application/json; charset=utf-8",
+                dataType:'json',
+                data:JSON.stringify({
+                    "name":_name,
+                    "mobile":_mobile,
+                    "password":_password
+                }),              
+                success : function(data) {
+                    console.log(data);
+                },
+                // 调用出错执行的函数
+                error : function() {
+                    console.log('register error');
+                }
+            });
+        }
+        /*登录功能*/
+        function login(){
+            var mobile =$("#mobile").val().replace(/\s/g,"");
+            var password = $("#password").val().replace(/\s/g,"");
+            if(mobile == ''){
+                $("#mobile").after('<label class="error is-visible">请输入手机号</label>');
+                return false;
+            }
+            if(password == ''){
+                $("#password").after('<label class="error is-visible">请输入密码</label>');
+                return false;
+            }
+            $.ajax({
+                type : "POST",
+                url : 'http://123.57.141.203:8314/login',
+                contentType: "application/json; charset=utf-8",
+                dataType:'json',
+                data:JSON.stringify({
+                    "mobile" : mobile,
+                    "password" :password
+                }),              
+                success : function(data) {
+                    console.log(data);
+                    console.log(data.loginInfo);
+                    if(data.code == 200){
+                        if (document.getElementById('remember').checked == true) { 
+                            $.cookie("remember", "true", { expires: 7 }); // 存储一个带7天期限的 cookie 
+                            $.cookie("mobile", mobile, { expires: 7 }); // 存储一个带7天期限的 cookie 
+                            $.cookie("password", password, { expires: 7 }); // 存储一个带7天期限的 cookie 
+                            $.cookie("ticket", data.ticket, { expires: 7 }); // 存储一个带7天期限的 cookie 
+                            $.cookie("companyName", data.loginInfo.companyName, { expires: 7 }); 
+                            $.cookie("name", data.loginInfo.name, { expires: 7 });
+                        }else { 
+                            $.cookie("remember", "false", { expires: -1 }); 
+                            $.cookie("mobile", '', { expires: -1 }); 
+                            $.cookie("password", '', { expires: -1 }); 
+                            $.cookie("ticket", '', { expires: -1 }); 
+                            $.cookie("companyName", '', { expires: -1 }); 
+                            $.cookie("name", '', { expires: -1 });
+                        }
+                        window.location.href='home.html';
+                    }else {
+                        $("#mobile").after('<label class="error is-visible">'+data.desc+'</label>');
+                    }
+                },
+                // 调用出错执行的函数
+                error : function() {
+                    console.log('login error');
+                }
+            });
+        }
+    </script>
+
   </body>
 </html>
