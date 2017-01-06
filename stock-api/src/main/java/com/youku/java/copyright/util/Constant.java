@@ -46,8 +46,6 @@ public class Constant {
 	public static class TimeType {
 		public static final int MONTH = 1;
 
-		public static final int WEEK = 2;
-
 		public static final int DAY = 2;
 		
 		public static final int HOUR = 3;

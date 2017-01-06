@@ -17,7 +17,6 @@ import com.youku.java.copyright.mapper.StatUserDayMapper;
 import com.youku.java.copyright.mapper.StatUserMonthMapper;
 import com.youku.java.copyright.util.Constant.RecordType;
 import com.youku.java.copyright.util.Constant.Time;
-import com.youku.java.copyright.util.Constant.TimeLength;
 import com.youku.java.copyright.util.Constant.TimeType;
 import com.youku.java.copyright.util.DateTool;
 
@@ -125,8 +124,7 @@ public class StatUserService {
 		return statUserDayMapper.selectById(time, id, limit);
 	}
 	
-	public List<StatUser> selectByTime(Date begin, Date end) {
-		int timeType = DateTool.getTimeType(begin, end);
+	public List<StatUser> selectByTime(Date begin, Date end, int timeType) {
 		if(timeType == TimeType.DAY) {
 			return statUserDayMapper.selectByTime(begin, end);
 		}else if(timeType == TimeType.MONTH) {
@@ -135,38 +133,47 @@ public class StatUserService {
 		return null;
 	}
 	
-	public List<StatUser> fillingTime(List<StatUser> statUsers, Date begin, Date end) {
+	public List<StatUser> fillingTime(List<StatUser> statUsers, Date begin, Date end, int type) {
 		List<StatUser> list = new ArrayList<StatUser>();
 		
-		int type = DateTool.getTimeType(begin, end);
-		long length = 0;
-		if(type == TimeType.HOUR) {
-			length = TimeLength.HOUR;
-			begin = DateTool.getHourBegin(begin);
-			end = DateTool.getHourBegin(end);
-		}else if(type == TimeType.DAY) {
-			length = TimeLength.DAY;
-			begin = DateTool.getBegin(begin);
-			end = DateTool.getBegin(end);
-		}else if(type == TimeType.MONTH) {
-			length = TimeLength.MONTH;
-			begin = DateTool.getMonthBegin(begin);
-			end = DateTool.getMonthBegin(end);
-		}
-		
-		for(long i = begin.getTime(); i <= end.getTime(); i+=length) {
+		Date index = begin;
+		while(true) {
 			StatUser temp = new StatUser();
-			temp.setTime(DateTool.standardSdf().format(new Date(i)));
+			temp.setTime(DateTool.standardSdf().format(index));
 			if(statUsers != null && statUsers.size() > 0) {
 				productionList: for(StatUser statUser : statUsers) {
-					if((statUser.getTime().getTime()/length) == (temp.getTime().getTime()/length)) {
+					if((statUser.getTime().getTime()/1000l) == (temp.getTime().getTime()/1000l)) {
 						temp = statUser;
 						break productionList;
 					}
 				}
 			}
 			list.add(temp);
+			
+			if(type == TimeType.DAY) {
+				index = DateTool.addDays(index, 1);
+			}else if(type == TimeType.MONTH) {
+				index = DateTool.addMonth(index, 1);
+			}
+			
+			if(index.getTime() > end.getTime()) {
+				break;
+			}
 		}
+		
+//		for(long i = begin.getTime(); i <= end.getTime(); i+=length) {
+//			StatUser temp = new StatUser();
+//			temp.setTime(DateTool.standardSdf().format(new Date(i)));
+//			if(statUsers != null && statUsers.size() > 0) {
+//				productionList: for(StatUser statUser : statUsers) {
+//					if((statUser.getTime().getTime()/length) == (temp.getTime().getTime()/length)) {
+//						temp = statUser;
+//						break productionList;
+//					}
+//				}
+//			}
+//			list.add(temp);
+//		}
 		return list;
 	}
 }
