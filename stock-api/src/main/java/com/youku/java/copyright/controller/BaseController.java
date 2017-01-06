@@ -7,6 +7,7 @@ import com.youku.java.copyright.service.CustomerService;
 import com.youku.java.copyright.service.GoodService;
 import com.youku.java.copyright.service.LogService;
 import com.youku.java.copyright.service.RecordService;
+import com.youku.java.copyright.service.StatUserService;
 import com.youku.java.copyright.service.UserService;
 import com.youku.java.copyright.util.JedisUtil;
 import com.youku.java.raptor.auth.NeedLogin;
@@ -28,6 +29,9 @@ public class BaseController {
 	
 	@Autowired
 	RecordService recordService;
+	
+	@Autowired
+	StatUserService statUserService;
 	
 	@Autowired
 	LogService logService;

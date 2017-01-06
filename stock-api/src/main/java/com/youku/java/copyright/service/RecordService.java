@@ -183,5 +183,8 @@ public class RecordService {
 		return recordMapper.countByUserid(loginInfo.getId(), type);
 	}
 	
+	public List<Record> selectByTime(Date time, int limit) {
+		return recordMapper.selectByTime(time, limit);
+	}
 	
 }

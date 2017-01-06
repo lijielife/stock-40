@@ -23,6 +23,9 @@ public class Constant {
 		//登陆有效期
 		public static final int LOGIN_TIME = 60 * 10;
 		
+		//开始统计时间
+		public static final String STAT_BEGIN_TIME = "2017-01-01 00:00:00";
+		
 	}
 	
 	public static class RecordType {
@@ -50,12 +53,14 @@ public class Constant {
 		public static final int HOUR = 3;
 	}
 	
-	public static class Length {
+	public static class TimeLength {
 		public static final long MONTH = 1000l * 60 * 60 * 24 * 30;
 
 		public static final long DAY = 1000l * 60 * 60 * 24;
 		
 		public static final long HOUR = 1000l * 60 * 60;
+		
+		public static final long MINUTE = 1000l * 60;
 	}
 	
 }

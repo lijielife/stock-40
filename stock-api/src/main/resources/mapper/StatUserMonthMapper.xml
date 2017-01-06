@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youku.java.copyright.mapper.StatUserMonthMapper">
+
+	<resultMap id="statUserMonthMap" type="StatUser">
+		<result property="id" column="pk_id" />
+		<result property="time" column="time" />
+		<result property="userId" column="fk_user_id" />
+		
+		<result property="productionPrice" column="production_price" />
+		<result property="otherPrice" column="other_price" />
+		<result property="sellPrice" column="sell_price" />
+		<result property="damagePrice" column="damage_price" />
+		<result property="profitPrice" column="profit_price" />
+	</resultMap>
+    
+    <insert id="insert" parameterType="StatUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_stat_user_month(
+			`time`, `fk_user_id`, `production_price`, `other_price`, `sell_price`, `damage_price`,
+			`profit_price`) 
+		VALUES(
+			#{time}, #{userId}, #{productionPrice}, #{otherPrice}, #{sellPrice}, #{damagePrice},
+			#{profitPrice})
+	</insert>
+	
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_stat_user_month(
+			`time`, `fk_user_id`, `production_price`, `other_price`, `sell_price`, `damage_price`,
+			`profit_price`) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{item.time}, #{item.userId}, #{item.productionPrice}, #{item.otherPrice}, 
+			#{item.sellPrice}, #{item.damagePrice}, #{item.profitPrice})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="StatUser">
+		UPDATE t_stat_user_month
+		SET `time` = #{time},
+		`production_price` = #{userId},
+		`production_price` = #{productionPrice},
+		`other_price` = #{otherPrice},
+		`sell_price` = #{sellPrice},
+		`damage_price` = #{damagePrice},
+		`profit_price` = #{profitPrice}
+		WHERE pk_id = #{id}
+	</update>
+
+	<select id="selectOne" parameterType="Map" resultMap="statUserMonthMap">
+		SELECT * 
+		FROM t_stat_user_month
+		WHERE pk_id = #{id}
+	</select>
+	
+	<select id="selectListByPage" parameterType="Map" resultMap="statUserMonthMap">
+        SELECT * 
+        FROM t_stat_user_month
+        order by pk_id desc
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="selectListByIds" parameterType="Map" resultMap="statUserMonthMap">
+        SELECT * 
+        FROM t_stat_user_month
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    order by pk_id desc
+    </select>
+    
+    <select id="countListByIds" parameterType="Map" resultType="Integer">
+        SELECT count(1)
+        FROM t_stat_user_month
+        WHERE pk_id IN
+	    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </select>
+	
+	<delete id="delete" parameterType="Map">
+		delete from t_stat_user_month
+		where pk_id = #{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from t_stat_user_month
+    </delete>
+	
+	<delete id="deleteByTime" parameterType="Map">
+		delete from t_stat_user_month
+		where `fk_user_id` = #{userId}
+		and `time` = #{time}
+	</delete>
+
+	<select id="selectLast" parameterType="Map" resultMap="statUserMonthMap">
+		SELECT * 
+		FROM t_stat_user_month
+		order by time desc 
+		limit 1
+	</select>
+
+	<select id="selectByTime" parameterType="Map" resultMap="statUserMonthMap">
+		SELECT * 
+		FROM t_stat_user_month
+		where time &gt;= #{beginTime}
+		and time &lt;= #{endTime}
+		order by time asc
+	</select>
+
+</mapper>

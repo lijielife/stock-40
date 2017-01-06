@@ -126,6 +126,12 @@
         	and `type` = #{type}
         </if>
     </select>
-    
+	
+	<select id="selectByTime" parameterType="Map" resultMap="recordMap">
+        SELECT * 
+        FROM t_record
+        where `create_time` &gt; #{time}
+        limit #{limit}
+    </select>
 
 </mapper>

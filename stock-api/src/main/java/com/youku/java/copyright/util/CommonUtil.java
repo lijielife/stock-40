@@ -73,7 +73,7 @@ public class CommonUtil {
 			String fieldName = field.getName();
 			//"id"跳过
 			if("serialVersionUID".equals(fieldName) || "id".equals(fieldName)
-					 || "time".equals(fieldName)) {
+					 || "time".equals(fieldName) || "userId".equals(fieldName)) {
 				continue;
 			}
 			
@@ -81,19 +81,21 @@ public class CommonUtil {
 				continue;
 			}
 			
-			if(field.getType() != Integer.class){
-				continue;
-			}
 			try{
 				if(fieldName != null && fieldName.length() > 0){
 					String getMethodName = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
 					Method getMethod = object.getClass().getDeclaredMethod(getMethodName);
 					Object objectValue = getMethod.invoke(object);
 					Object appendValue = getMethod.invoke(append);
-					
 					String setMethodName = "set"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
-					Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Integer.class);
-					setMethod.invoke(object, (Integer)objectValue + (Integer)appendValue);
+					
+					if(field.getType() == Double.class){
+						Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Double.class);
+						setMethod.invoke(object, (Double)objectValue + (Double)appendValue);
+					}else if(field.getType() == Integer.class){
+						Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Integer.class);
+						setMethod.invoke(object, (Integer)objectValue + (Integer)appendValue);
+					}
 				}
 			}catch (Exception e) {
 				log.error("error:", e);
@@ -376,5 +378,5 @@ public class CommonUtil {
             }
         }
 	}
-	
+
 }
