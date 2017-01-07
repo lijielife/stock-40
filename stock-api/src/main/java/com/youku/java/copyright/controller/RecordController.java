@@ -1,6 +1,8 @@
 package com.youku.java.copyright.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.youku.java.copyright.bean.Record;
 import com.youku.java.copyright.bean.User;
+import com.youku.java.copyright.exception.PermissionDeniedException;
 import com.youku.java.copyright.util.Constant.RecordType;
 import com.youku.java.raptor.auth.NeedLogin;
 import com.youku.java.raptor.exception.InvalidArgumentException;
@@ -48,13 +51,26 @@ public class RecordController extends BaseController{
 
 	@RequestMapping(value = "/records", method = RequestMethod.GET)
 	public Object loginInfo(User loginInfo, 
+			@RequestParam(required = false, value = "id", defaultValue = "0") long id, 
 			@RequestParam(required = false, value = "type", defaultValue = "0") int type, 
 			@RequestParam(required = false, value = "page", defaultValue = "1") int page, 
 			@RequestParam(required = false, value = "pageSize", defaultValue = "20") int pageSize){
 		Map<String,Object> result = new HashMap<String, Object>();
 		
-		if(page > 0 && pageSize > 0) {
-			result.put("data", recordService.selectByUserid(loginInfo, type, page, pageSize));
+		if(id > 0) {
+			List<Record> records = new ArrayList<Record>();
+			Record record = recordService.selectOne(id);
+			if(record == null) {
+				throw new InvalidArgumentException("找不到的数据");
+			}else if(record.getUserId().longValue() != loginInfo.getId().longValue()) {
+				throw new PermissionDeniedException("权限不足");
+			}else {
+				records.add(record);
+			}
+			result.put("data", recordService.convert2View(records));
+		}else if(page > 0 && pageSize > 0) {
+			List<Record> records = recordService.selectByUserid(loginInfo, type, page, pageSize);
+			result.put("data", recordService.convert2View(records));
 			result.put("total", recordService.countByUserid(loginInfo, type));
 			result.put("page", page);
 			result.put("pageSize", pageSize);

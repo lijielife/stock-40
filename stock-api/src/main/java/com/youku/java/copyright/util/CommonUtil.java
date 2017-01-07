@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,13 +55,43 @@ public class CommonUtil {
 			
 			String getMethod = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
 			try {
-				result.add((T) o.getClass().getDeclaredMethod(getMethod).invoke(o));
+				T object = (T) o.getClass().getDeclaredMethod(getMethod).invoke(o);
+				
+				if(!result.contains(object)) {
+					result.add(object);
+				}
 			} catch (Exception e) {
 				throw new RuntimeException("CommonUtil entity error ."+e);
 			}
 		}
 		return result;
 	}
+	/**
+	 * 根据传入的对象集合，拿出对象中某一字段的集合
+	 * @param <Y>
+	 * @param list
+	 * @param fieldName
+	 * @param t
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, Y> Map<T, Y> entityMap(List<Y> list,String fieldName,Class<T> t){
+		Map<T, Y> result = new HashMap<T, Y>();
+		if(list == null || list.size() <= 0){
+			return result;
+		}
+		for(Y o : list){
+			
+			String getMethod = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+			try {
+				result.put((T) o.getClass().getDeclaredMethod(getMethod).invoke(o), o);
+			} catch (Exception e) {
+				throw new RuntimeException("CommonUtil entity error ."+e);
+			}
+		}
+		return result;
+	}
+	
 	
 	public static Object addColumn(Object object,Object append, String[] ignore){
 		List<String> ignoreList = Arrays.asList(ignore);

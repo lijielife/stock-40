@@ -95,4 +95,8 @@ public class CustomerService {
 		}
 	}
 	
+	public List<Customer> selectByIds(List<Long> ids) {
+		return customerMapper.selectListByIds(ids);
+	}
+	
 }
