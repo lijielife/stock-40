@@ -105,14 +105,13 @@
 
     </div>
     <script src="js/jquery.js"></script>
-    <script src="js/jquery.cookie.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
     <script type="text/javascript">
         $(function(){
-            console.log($.cookie("remember"));
             if ($.cookie("remember") == "true") { 
                 document.getElementById('remember').checked = true;
-                /*$("#userphone").val($.cookie("usermobilephone")); 
-                $("#password").val($.cookie("userpassword")); */
+                $("#mobile").val($.cookie("mobile")); 
+                $("#password").val($.cookie("password"));
             } 
             $("#login").click(function(){
               login();
@@ -131,8 +130,6 @@
             });
             //
             $("input").focus(function(e){
-              console.log(this);
-              console.log(this.id);
               $(this).next().remove();
             });
 
@@ -154,6 +151,10 @@
                 }),              
                 success : function(data) {
                     console.log(data);
+                    if(data.code == 200){
+                    	$(".login").show();
+              			$(".register").hide();
+                    }
                 },
                 // 调用出错执行的函数
                 error : function() {
