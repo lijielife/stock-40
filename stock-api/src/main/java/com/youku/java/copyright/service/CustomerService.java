@@ -45,6 +45,10 @@ public class CustomerService {
 	
 	public void delete(long id, User loginInfo) {
 		Customer customer = customerMapper.selectOne(id);
+		if(customer == null) {
+			throw new InvalidArgumentException("找不到的数据");
+		}
+		
 		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
@@ -60,7 +64,7 @@ public class CustomerService {
 		}
 		
 		Customer src = customerMapper.selectOne(customer.getId());
-		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
+		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
 		try{
