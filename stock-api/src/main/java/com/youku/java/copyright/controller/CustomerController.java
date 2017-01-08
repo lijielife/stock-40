@@ -58,9 +58,11 @@ public class CustomerController extends BaseController{
 	public Object loginInfo(User loginInfo, 
 			@RequestParam(required = false, value = "id", defaultValue = "0") long id, 
 			@RequestParam(required = false, value = "type", defaultValue = "0") int type, 
+			@RequestParam(required = false, value = "name", defaultValue = "") String name, 
 			@RequestParam(required = false, value = "page", defaultValue = "1") int page, 
 			@RequestParam(required = false, value = "pageSize", defaultValue = "20") int pageSize){
 		Map<String,Object> result = new HashMap<String, Object>();
+		name = name.trim();
 		
 		if(id > 0) {
 			Customer customer = customerService.selectOne(id);
@@ -74,8 +76,8 @@ public class CustomerController extends BaseController{
 			}
 			result.put("data", customers);
 		}else if(type > 0 && page > 0 && pageSize > 0) {
-			result.put("data", customerService.selectByType(loginInfo.getId(), type, page, pageSize));
-			result.put("total", customerService.countByType(loginInfo.getId(), type));
+			result.put("data", customerService.selectByType(loginInfo.getId(), type, name, page, pageSize));
+			result.put("total", customerService.countByType(loginInfo.getId(), type, name));
 			result.put("page", page);
 			result.put("pageSize", pageSize);
 		}else {

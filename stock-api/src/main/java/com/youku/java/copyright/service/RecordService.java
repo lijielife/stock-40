@@ -198,8 +198,10 @@ public class RecordService {
 		List<Long> customerIds = CommonUtil.entity(records, "customerId", Long.class);
 		List<Long> goodIds = CommonUtil.entity(records, "goodId", Long.class);
 		
-		List<Customer> customers = customerService.selectByIds(customerIds);
-		List<Good> goods = goodService.selectByIds(goodIds);
+		List<Customer> customers = customerIds == null || customerIds.size() <=0 ? new ArrayList<Customer>()
+				:customerService.selectByIds(customerIds);
+		List<Good> goods = goodIds == null || goodIds.size() <=0 ? new ArrayList<Good>()
+				:goodService.selectByIds(goodIds);
 		
 		Map<Long, Customer> customerMap = CommonUtil.entityMap(customers, "id", Long.class);
 		Map<Long, Good> goodMap = CommonUtil.entityMap(goods, "id", Long.class);

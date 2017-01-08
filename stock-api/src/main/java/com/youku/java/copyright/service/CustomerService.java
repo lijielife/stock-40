@@ -80,12 +80,12 @@ public class CustomerService {
 		return customerMapper.selectByMobile(userId, type, mobile);
 	}
 	
-	public List<Customer> selectByType(long userId, int type, int page, int pageSize) {
-		return customerMapper.selectByType(userId, type, pageSize, (page-1)*pageSize);
+	public List<Customer> selectByType(long userId, int type, String name, int page, int pageSize) {
+		return customerMapper.selectByType(userId, type, name, pageSize, (page-1)*pageSize);
 	}
 	
-	public int countByType(long userId, int type) {
-		return customerMapper.countByType(userId, type);
+	public int countByType(long userId, int type, String name) {
+		return customerMapper.countByType(userId, type, name);
 	}
 	
 	public void checkOwner(User loginInfo, long id) {

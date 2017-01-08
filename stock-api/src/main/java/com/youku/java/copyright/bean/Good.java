@@ -38,12 +38,6 @@ public class Good{
 	@Note(name="单价")
 	private Double unitPrice;
 	
-	@Note(name="售出总数")
-	private Integer sellNumber;
-	
-	@Note(name="总利润")
-	private Double profitPrice;
-	
 	@Note(name="进货记录ID")
 	private Long recordId;
 	
@@ -55,6 +49,21 @@ public class Good{
 	@JSONField (format="yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date createTime;
+	
+	@Note(name="库存价格")
+	private Double productionPrice;
+	
+	@Note(name="销售额")
+	private Double sellPrice;
+	
+	@Note(name="售出总数")
+	private Integer sellNumber;
+	
+	@Note(name="总利润")
+	private Double profitPrice;
+	
+	@Note(name="折损费")
+	private Double damagePrice;
 	
 	public Long getId() {
 		return id;

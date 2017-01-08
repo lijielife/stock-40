@@ -63,6 +63,7 @@ public class GoodController extends BaseController{
 			@RequestParam(required = false, value = "page", defaultValue = "1") int page, 
 			@RequestParam(required = false, value = "pageSize", defaultValue = "20") int pageSize){
 		Map<String,Object> result = new HashMap<String, Object>();
+		name = name.trim();
 		
 		if(id > 0) {
 			Good good = goodService.selectOne(id);

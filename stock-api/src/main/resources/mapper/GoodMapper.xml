@@ -103,7 +103,9 @@
         SELECT * 
         FROM t_good
         where fk_user_id = #{userId} 
-        and name like CONCAT('%', '${name}', '%')
+        <if test="name != null and name != ''">
+       		and name like CONCAT('%', '${name}', '%')
+      	</if>
         limit #{limit}
     </select>
 
