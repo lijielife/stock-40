@@ -100,4 +100,7 @@ public class GoodService {
 			throw new InvalidArgumentException("不是该客户的拥有者");
 		}
 	}
+	public List<Good> selectByIds(List<Long> ids) {
+		return goodMapper.selectListByIds(ids);
+	}
 }

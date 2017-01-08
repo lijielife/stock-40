@@ -1,6 +1,7 @@
 
 package com.youku.java.copyright.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,6 @@ public interface RecordMapper extends MapperI<Record>{
 			@Param("offset")int offset);
 	
 	public int countByUserid(@Param("userId")long userId, @Param("type")int type);
+	
+	public List<Record> selectByTime(@Param("time")Date time, @Param("limit")int limit);
 }

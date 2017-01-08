@@ -715,6 +715,11 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     display: inline-block;
     font-size: 20px;
 }
+.sidebar-toggle-box .icon-home {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+}
 
 
 .sidebar-closed > #sidebar > ul {
@@ -3058,9 +3063,12 @@ ul.amounts li {
 }
 
 .form-horizontal.tasi-form .form-group {
-    border-bottom: 1px solid #eff2f7;
+    border-bottom: 1px solid #eee;
+    /*border-bottom: 1px solid #eff2f7;
     padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 15px;*//*1月6日修改*/
+   	padding-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 .form-horizontal.tasi-form .form-group:last-child {

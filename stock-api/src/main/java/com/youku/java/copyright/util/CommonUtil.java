@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,13 +55,43 @@ public class CommonUtil {
 			
 			String getMethod = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
 			try {
-				result.add((T) o.getClass().getDeclaredMethod(getMethod).invoke(o));
+				T object = (T) o.getClass().getDeclaredMethod(getMethod).invoke(o);
+				
+				if(!result.contains(object)) {
+					result.add(object);
+				}
 			} catch (Exception e) {
 				throw new RuntimeException("CommonUtil entity error ."+e);
 			}
 		}
 		return result;
 	}
+	/**
+	 * 根据传入的对象集合，拿出对象中某一字段的集合
+	 * @param <Y>
+	 * @param list
+	 * @param fieldName
+	 * @param t
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, Y> Map<T, Y> entityMap(List<Y> list,String fieldName,Class<T> t){
+		Map<T, Y> result = new HashMap<T, Y>();
+		if(list == null || list.size() <= 0){
+			return result;
+		}
+		for(Y o : list){
+			
+			String getMethod = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+			try {
+				result.put((T) o.getClass().getDeclaredMethod(getMethod).invoke(o), o);
+			} catch (Exception e) {
+				throw new RuntimeException("CommonUtil entity error ."+e);
+			}
+		}
+		return result;
+	}
+	
 	
 	public static Object addColumn(Object object,Object append, String[] ignore){
 		List<String> ignoreList = Arrays.asList(ignore);
@@ -73,7 +104,7 @@ public class CommonUtil {
 			String fieldName = field.getName();
 			//"id"跳过
 			if("serialVersionUID".equals(fieldName) || "id".equals(fieldName)
-					 || "time".equals(fieldName)) {
+					 || "time".equals(fieldName) || "userId".equals(fieldName)) {
 				continue;
 			}
 			
@@ -81,19 +112,21 @@ public class CommonUtil {
 				continue;
 			}
 			
-			if(field.getType() != Integer.class){
-				continue;
-			}
 			try{
 				if(fieldName != null && fieldName.length() > 0){
 					String getMethodName = "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
 					Method getMethod = object.getClass().getDeclaredMethod(getMethodName);
 					Object objectValue = getMethod.invoke(object);
 					Object appendValue = getMethod.invoke(append);
-					
 					String setMethodName = "set"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
-					Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Integer.class);
-					setMethod.invoke(object, (Integer)objectValue + (Integer)appendValue);
+					
+					if(field.getType() == Double.class){
+						Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Double.class);
+						setMethod.invoke(object, (Double)objectValue + (Double)appendValue);
+					}else if(field.getType() == Integer.class){
+						Method setMethod = object.getClass().getDeclaredMethod(setMethodName, Integer.class);
+						setMethod.invoke(object, (Integer)objectValue + (Integer)appendValue);
+					}
 				}
 			}catch (Exception e) {
 				log.error("error:", e);
@@ -376,5 +409,5 @@ public class CommonUtil {
             }
         }
 	}
-	
+
 }

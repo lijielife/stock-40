@@ -18,8 +18,11 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+<<<<<<< HEAD
     
     <link rel="stylesheet" href="css/jqpagination.css" /><!--分页-->
+=======
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -27,9 +30,12 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
+<<<<<<< HEAD
     	body{
     		font-size: 13px;
     	}
+=======
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
     	.label-mini{
     		padding: 0.25em 0.4em;
     	}    	
@@ -398,6 +404,7 @@
                               </thead>
                               <tbody id="goods-list">
 	                              
+<<<<<<< HEAD
                               </tbody>                              
                           </table>
                           <div class="gigantic pagination">
@@ -414,6 +421,10 @@
 													    <a href="#" class="last" data-action="last">&raquo;</a>
 												   	</div>
 													</div>
+=======
+                              </tbody>
+                          </table>
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
                           <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                               <div class="modal-dialog">
                                   <div class="modal-content" id="updateModal-content">
@@ -478,6 +489,7 @@
     <!--common script for all pages-->
     <script src="js/common-scripts.js"></script>
     <script src="js/jquery.cookie.js"></script>
+<<<<<<< HEAD
     <!--分页-->
     <script type="text/javascript" src="js/jquery.jqpagination.js" ></script>
     <script type="text/javascript">
@@ -491,12 +503,27 @@
     		$("#add-goods").click(function(){
     			addGoods();
     		});    		
+=======
+    <script type="text/javascript">
+    	$(function(){
+    		var ticket = $.cookie("ticket");    		
+    		loginFlag(ticket);    		
+    		goods(ticket);
+    		$("#add-goods").click(function(){
+    			addGoods(ticket);
+    		});    
+    		
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
     		$('#addModal').click(function(){    			
     			$("#myModal").modal('show');
     		});
     		$('#update-goods').click(function(){
     			var id = $(this).attr('data-id');
+<<<<<<< HEAD
     			updateGoods(id);
+=======
+    			updateGoods(ticket,id);
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
     		});
     		/*window.setTimeout(function(){
 				    $('[data-dismiss="alert"]').alert('close');
@@ -504,6 +531,7 @@
 				$(".log-out").click(function(){//每次登录时把cookie中ticket清除
 					$.cookie("ticket", '', { expires: -1 }); 
 				});
+<<<<<<< HEAD
 				initPage(page,to);
 				function initPage(page,total){ 
 					console.log("total:"+total);
@@ -523,14 +551,32 @@
 	    	}
 				function goods(page){	  
 					console.log(page);
+=======
+    	});
+    	//判断当前用户是否已经登录
+    	function loginFlag(ticket){    		
+    		if(ticket == '' || ticket == undefined){
+    			location.href = 'login.html';
+    		}
+    		$("#username").html($.cookie("name"));
+    	}
+    	function goods(ticket){	  
+    			console.log(ticket);
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
 	        $.ajax({
 	            type : "GET",
 	            url : 'http://123.57.141.203:8314/goods',
 	            dataType:'json',
+<<<<<<< HEAD
 	            async: false,
 	            data:{
                 "page":page,
                 "pageSize":pageSize
+=======
+	            data:{
+                "page":1,
+                "pageSize":10
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
 	            },   
 	            headers:{
 	            	"ticket":ticket
@@ -538,7 +584,10 @@
 	            success : function(data) {
 	            	console.log(data);
 	            	if(data.code == 200){
+<<<<<<< HEAD
 	            		to=data.total;
+=======
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
 	            		$("#goods-list").empty();	            		
 	            		var goods = data.data;
 	            		for(var i=0;i<goods.length;i++){
@@ -558,6 +607,7 @@
 					    		});
 					    		$("button[data-reactid='updateGoods']").click(function(){
 					    			var id = $(this).attr('data-id');
+<<<<<<< HEAD
 					    			updateModal(id);
 					    		});
 					    		$("button[data-reactid='delectGoods']").click(function(){
@@ -571,6 +621,14 @@
 					    		}*/
 					    		
 					    		console.log("data.page:"+data.page);
+=======
+					    			updateModal(ticket,id);
+					    		});
+					    		$("button[data-reactid='delectGoods']").click(function(){
+					    			var id = $(this).attr('data-id');
+					    			delectGoods(ticket,id);
+					    		});
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
 	            	} else {
 	            		location.href= "login.html";
 	            	}
@@ -580,6 +638,7 @@
 	                console.log('goods-list error');
 	            }
 	        });
+<<<<<<< HEAD
 		    }    	
 	    	function addGoods(){
 	    		var name =$("#name").val().replace(/\s/g,"");
@@ -703,6 +762,117 @@
     		$("#username").html($.cookie("name"));
     	}
     	
+=======
+	    }
+    	function addGoods(ticket){
+    		var name =$("#name").val().replace(/\s/g,"");
+        var unitPrice =$("#unitPrice").val().replace(/\s/g,"");
+    		$.ajax({
+            type : "POST",
+            url : 'http://123.57.141.203:8314/goods',
+            contentType: "application/json; charset=utf-8",
+            dataType:'json',
+            data:JSON.stringify({
+					    "name":name,
+					    "unitPrice":unitPrice
+            }),   
+            headers:{
+            	"ticket":ticket
+            },	            
+            success : function(data) {
+            	if(data.code == 200){
+            		$("#myModal").modal('hide');  
+            		goods(ticket);
+            	} else {
+            		console.log(data);
+            	}
+            },
+            // 调用出错执行的函数
+            error : function() {
+                console.log('goods-add error');
+            }
+        });
+    	}
+    	function updateGoods(ticket,id){
+    		console.log(id);
+    		var name =$("#_name").val().replace(/\s/g,"");
+        var unitPrice =$("#_unitPrice").val().replace(/\s/g,"");
+    		$.ajax({
+            type : "PUT",
+            url : 'http://123.57.141.203:8314/goods',
+            contentType: "application/json; charset=utf-8",
+            dataType:'json',
+            data:JSON.stringify({
+            	"id":id,
+					    "name":name,
+					    "unitPrice":unitPrice
+            }),   
+            headers:{
+            	"ticket":ticket
+            },	            
+            success : function(data) {
+            	if(data.code == 200){
+            		$("#updateModal").modal('hide');  
+            		goods(ticket);
+            	} else {
+            		console.log(data);
+            	}
+            },
+            // 调用出错执行的函数
+            error : function() {
+                console.log('goods-update error');
+            }
+        });
+    	}
+    	function delectGoods(ticket,id){
+    		$.ajax({
+            type : "DELETE",
+            url : 'http://123.57.141.203:8314/goods?id='+id,
+            dataType:'json',
+            headers:{
+            	"ticket":ticket
+            },	            
+            success : function(data) {
+            	console.log(data);
+            	if(data.code == 200){
+            		goods(ticket);
+            	} else {
+            		console.log(data);
+            	}
+            },
+            // 调用出错执行的函数
+            error : function() {
+                console.log('goods-delect error');
+            }
+        });
+    	}
+    	function updateModal(ticket,id){
+    		$.ajax({
+            type : "GET",
+            url : 'http://123.57.141.203:8314/goods?id='+id,
+            dataType:'json',
+            headers:{
+            	"ticket":ticket
+            },	            
+            success : function(data) {
+            	console.log(data);
+            	if(data.code == 200){
+            		var goods = data.data
+            		$("#_name").val(goods[0].name);
+            		$("#_unitPrice").val(goods[0].unitPrice);            		
+            		$("#update-goods").attr('data-id',goods[0].id);
+            		$("#updateModal").modal('show');
+            	} else {
+            		console.log(data);
+            	}
+            },
+            // 调用出错执行的函数
+            error : function() {
+                console.log('customers-modal error');
+            }
+        });
+    	}
+>>>>>>> 08278e9b0efaee1cd6692bd9b2582ba3ef42ffc9
     </script>
 
 

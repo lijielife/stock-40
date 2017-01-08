@@ -98,6 +98,9 @@
         FROM t_customer
         where `fk_user_id` = #{userId}
         and `type` = #{type}
+        <if test="name != null and name != ''">
+        	and name like CONCAT('%', '${name}', '%')
+        </if>
         order by pk_id desc
         LIMIT #{limit}
         OFFSET #{offset}
@@ -108,6 +111,9 @@
         FROM t_customer
         where `fk_user_id` = #{userId}
         and `type` = #{type}
+        <if test="name != null and name != ''">
+        	and name like CONCAT('%', '${name}', '%')
+        </if>
     </select>
 
 </mapper>

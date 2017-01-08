@@ -1,5 +1,6 @@
 package com.youku.java.copyright.service.impl;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,18 +32,18 @@ public class RecordServiceTest {
 		recordService.sell(record, loginInfo);
 	}
 	
-//	@Test
+	@Test
 	public void stock() {
 		User loginInfo = new User();
-		loginInfo.setId(1l);
+		loginInfo.setId(2l);
 		
 		Record record = new Record();
-		record.setCustomerId(1l);
-		record.setGoodId(1l);
+		record.setCustomerId(2l);
+		record.setGoodId(2l);
 		record.setNumber(30);
-		record.setProductionPrice(6800.0);
+		record.setProductionPrice(1000.0);
 		record.setOtherPrice(45.0);
-		record.setUserId(1l);
+		record.setUserId(2l);
 		
 		recordService.stock(record, loginInfo);
 	}

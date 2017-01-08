@@ -13,9 +13,9 @@ public interface CustomerMapper extends MapperI<Customer>{
 	public Customer selectByMobile(@Param("userId")long userId, @Param("type")int type, 
 			@Param("mobile")String mobile);
 	
-	public List<Customer> selectByType(@Param("userId")long userId, @Param("type")int type, 
+	public List<Customer> selectByType(@Param("userId")long userId, @Param("type")int type, @Param("name")String name,
 			@Param("limit")int limit, @Param("offset")int offset);
 
-	public int countByType(@Param("userId")long userId, @Param("type")int type);
+	public int countByType(@Param("userId")long userId, @Param("type")int type,@Param("name")String name);
 	
 }

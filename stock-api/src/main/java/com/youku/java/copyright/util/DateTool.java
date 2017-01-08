@@ -243,14 +243,26 @@ public class DateTool {
 	}
 	
 	public static void main(String[] args) {
-
+		
 		Date begin = new Date();
-		System.out.println(standardSdf().format(begin));
-		Date end = addHours(begin, 23);
-		System.out.println(standardSdf().format(end));
+		
+		Date end = begin;
+		end = addDays(end, 1);
+		System.out.println(begin);
+		System.out.println(end);
 
-		System.out.println(standardSdf().format(getBeginDateByType(begin, end, true)));
-		System.out.println(standardSdf().format(getBeginDateByType(begin, end, false)));
+//		Date begin = new Date();
+//		
+//		Date end = addDays(begin, 1);
+//		System.out.println(begin);
+//		System.out.println(end);
+		
+//		System.out.println(standardSdf().format(begin));
+//		Date end = addHours(begin, 23);
+//		System.out.println(standardSdf().format(end));
+//
+//		System.out.println(standardSdf().format(getBeginDateByType(begin, end, true)));
+//		System.out.println(standardSdf().format(getBeginDateByType(begin, end, false)));
 		
 		
 //		Date now2 = new Date();

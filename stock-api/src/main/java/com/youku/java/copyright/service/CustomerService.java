@@ -45,6 +45,10 @@ public class CustomerService {
 	
 	public void delete(long id, User loginInfo) {
 		Customer customer = customerMapper.selectOne(id);
+		if(customer == null) {
+			throw new InvalidArgumentException("找不到的数据");
+		}
+		
 		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
@@ -60,7 +64,7 @@ public class CustomerService {
 		}
 		
 		Customer src = customerMapper.selectOne(customer.getId());
-		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
+		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
 		try{
@@ -76,12 +80,12 @@ public class CustomerService {
 		return customerMapper.selectByMobile(userId, type, mobile);
 	}
 	
-	public List<Customer> selectByType(long userId, int type, int page, int pageSize) {
-		return customerMapper.selectByType(userId, type, pageSize, (page-1)*pageSize);
+	public List<Customer> selectByType(long userId, int type, String name, int page, int pageSize) {
+		return customerMapper.selectByType(userId, type, name, pageSize, (page-1)*pageSize);
 	}
 	
-	public int countByType(long userId, int type) {
-		return customerMapper.countByType(userId, type);
+	public int countByType(long userId, int type, String name) {
+		return customerMapper.countByType(userId, type, name);
 	}
 	
 	public void checkOwner(User loginInfo, long id) {
@@ -89,6 +93,10 @@ public class CustomerService {
 		if(customer.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new InvalidArgumentException("不是该客户的拥有者");
 		}
+	}
+	
+	public List<Customer> selectByIds(List<Long> ids) {
+		return customerMapper.selectListByIds(ids);
 	}
 	
 }

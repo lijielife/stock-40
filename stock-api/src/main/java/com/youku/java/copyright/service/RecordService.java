@@ -1,12 +1,15 @@
 package com.youku.java.copyright.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.youku.java.copyright.bean.Customer;
 import com.youku.java.copyright.bean.Good;
 import com.youku.java.copyright.bean.Record;
 import com.youku.java.copyright.bean.User;
@@ -14,6 +17,7 @@ import com.youku.java.copyright.mapper.RecordMapper;
 import com.youku.java.copyright.util.CommonUtil;
 import com.youku.java.copyright.util.Constant.RecordType;
 import com.youku.java.copyright.util.DateTool;
+import com.youku.java.copyright.view.RecordView;
 import com.youku.java.raptor.exception.InvalidArgumentException;
 
 @Transactional(rollbackFor = Exception.class)
@@ -28,6 +32,9 @@ public class RecordService {
 	
 	@Autowired
 	private GoodService goodService;
+	
+	@Autowired
+	private CustomerService customerService;
 
 	public Record selectOne(long id) {
 		return recordMapper.selectOne(id);
@@ -183,5 +190,30 @@ public class RecordService {
 		return recordMapper.countByUserid(loginInfo.getId(), type);
 	}
 	
+	public List<Record> selectByTime(Date time, int limit) {
+		return recordMapper.selectByTime(time, limit);
+	}
+	
+	public List<RecordView> convert2View(List<Record> records) {
+		List<Long> customerIds = CommonUtil.entity(records, "customerId", Long.class);
+		List<Long> goodIds = CommonUtil.entity(records, "goodId", Long.class);
+		
+		List<Customer> customers = customerIds == null || customerIds.size() <=0 ? new ArrayList<Customer>()
+				:customerService.selectByIds(customerIds);
+		List<Good> goods = goodIds == null || goodIds.size() <=0 ? new ArrayList<Good>()
+				:goodService.selectByIds(goodIds);
+		
+		Map<Long, Customer> customerMap = CommonUtil.entityMap(customers, "id", Long.class);
+		Map<Long, Good> goodMap = CommonUtil.entityMap(goods, "id", Long.class);
+		
+		List<RecordView> recordViews = new ArrayList<RecordView>();
+		if(records != null && records.size() > 0) {
+			for(Record record : records) {
+				recordViews.add(new RecordView(record, customerMap.get(record.getCustomerId()), goodMap.get(record.getGoodId())));
+			}
+		}
+		
+		return recordViews;
+	}
 	
 }
