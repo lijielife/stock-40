@@ -21,8 +21,9 @@ public interface GoodMapper extends MapperI<Good>{
 	public int countByUserId(@Param("userId")long userId);
 	
 	public int updateNumberRecord(@Param("id")long id, @Param("number")int number, 
-			@Param("recordId")long recordId);
+			@Param("recordId")long recordId, @Param("productionPrice")double productionPrice);
 	
-	public int updateNumber(@Param("id")long id, @Param("number")int number);
+	public int updateNumber(@Param("id")long id, @Param("number")int number, 
+			@Param("productionPrice")double productionPrice);
 	
 }

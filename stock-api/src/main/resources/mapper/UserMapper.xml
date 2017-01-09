@@ -91,7 +91,7 @@
 		WHERE `mobile` = #{mobile}
 	</select>
 
-	<update id="updatePrice" parameterType="User">
+	<update id="updatePrice" parameterType="Map">
 		UPDATE t_user
 		SET `production_price` = `production_price` + #{productionPrice},
 		`other_price` = `other_price` + #{otherPrice},

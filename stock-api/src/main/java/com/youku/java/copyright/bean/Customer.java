@@ -53,6 +53,18 @@ public class Customer{
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date createTime;
 	
+	private Double productionPrice;
+	
+	private Integer number;
+	
+	private double sellPrice;
+	
+	private Integer sellNumber;
+	
+	private Double damagePrice;
+	
+	private Double profitPrice;
+	
 	public Long getId() {
 		return id;
 	}
@@ -107,6 +119,54 @@ public class Customer{
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Double getProductionPrice() {
+		return productionPrice;
+	}
+
+	public void setProductionPrice(Double productionPrice) {
+		this.productionPrice = productionPrice;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public double getSellPrice() {
+		return sellPrice;
+	}
+
+	public void setSellPrice(double sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
+	public Integer getSellNumber() {
+		return sellNumber;
+	}
+
+	public void setSellNumber(Integer sellNumber) {
+		this.sellNumber = sellNumber;
+	}
+
+	public Double getDamagePrice() {
+		return damagePrice;
+	}
+
+	public void setDamagePrice(Double damagePrice) {
+		this.damagePrice = damagePrice;
+	}
+
+	public Double getProfitPrice() {
+		return profitPrice;
+	}
+
+	public void setProfitPrice(Double profitPrice) {
+		this.profitPrice = profitPrice;
 	}
 
 	public Date getCreateTime() {

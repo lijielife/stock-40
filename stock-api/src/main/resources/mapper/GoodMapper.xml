@@ -14,17 +14,22 @@
 		<result property="recordId" column="fk_record_id" />
 		<result property="stockNumber" column="stock_number" />
 		<result property="createTime" column="create_time" />
+		<result property="productionPrice" column="production_price" />
+		<result property="sellPrice" column="sell_price" />
 		<result property="sellNumber" column="sell_number" />
 		<result property="profitPrice" column="profit_price" />
+		<result property="damagePrice" column="damage_price" />
 	</resultMap>
     
     <insert id="insert" parameterType="Good" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_good(
 			`name`, `fk_user_id`, `number`, `unit_price`, `fk_record_id`, `stock_number`, 
-			`create_time`, `sell_number`, `profit_price`) 
+			`create_time`, `production_price`, `sell_price`, `sell_number`, `profit_price`,
+			`damage_price`) 
 		VALUES(
 			#{name}, #{userId}, #{number}, #{unitPrice}, #{recordId}, #{stockNumber}, 
-			#{createTime}, #{sellNumber}, #{profitPrice})
+			#{createTime}, #{productionPrice}, #{sellPrice}, #{sellNumber}, #{profitPrice},
+			#{damagePrice})
 	</insert>
 	
 	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
@@ -46,8 +51,11 @@
 		`unit_price` = #{unitPrice},
 		`fk_record_id` = #{recordId},
 		`stock_number` = #{stockNumber},
+		`production_price` = #{productionPrice},
+		`sell_price` = #{sellPrice},
 		`sell_number` = #{sellNumber},
-		`profit_price` = #{profitPrice}
+		`profit_price` = #{profitPrice},
+		`damage_price` = #{damagePrice}
 		WHERE pk_id = #{id}
 	</update>
 
@@ -126,7 +134,8 @@
 
 	<update id="updateNumber" parameterType="Good">
 		UPDATE t_good
-		SET `number` = `number` + #{number}
+		SET `number` = `number` + #{number},
+		`production_price` = `production_price` + #{productionPrice}
 		WHERE pk_id = #{id}
 		and stock_number &gt; 0
 	</update>
@@ -135,7 +144,8 @@
 		UPDATE t_good
 		SET `number` = `number` + #{number},
 		`fk_record_id` = #{recordId},
-		`stock_number` = #{number}
+		`stock_number` = #{number},
+		`production_price` = `production_price` + #{productionPrice}
 		WHERE pk_id = #{id}
 	</update>
 	

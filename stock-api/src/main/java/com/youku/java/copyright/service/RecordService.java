@@ -59,7 +59,10 @@ public class RecordService {
 				record.getProductionPrice(), record.getOtherPrice(), 0.0, 0.0, 0.0);
 		
 		//影响商品数量，记录ID，记录剩余数量
-		goodService.updateNumber(record.getGoodId(), record.getNumber(), record.getId());
+		goodService.updateNumber(record.getGoodId(), record.getNumber(), record.getId(), record.getProductionPrice());
+		
+		customerService.updatePrice(record.getCustomerId(), record.getProductionPrice(), record.getNumber(), 
+				0.0, 0, 0.0, 0.0);
 		return record.getId();
 	}
 	
@@ -85,6 +88,8 @@ public class RecordService {
 		good.setRecordId(recordGood.getRecordId());
 		good.setStockNumber(recordGood.getStockNumber());
 		good.setProfitPrice(good.getProfitPrice() + recordGood.getProfitPrice());
+		good.setSellPrice(good.getSellPrice() + record.getSellPrice());
+		good.setProductionPrice(good.getProductionPrice() - recordGood.getProductionPrice());
 
 		//插入记录数据
 		record.setType(RecordType.SELL);
@@ -100,6 +105,9 @@ public class RecordService {
 		//影响用户产品费用
 		double profitPrice = recordGood.getProfitPrice();
 		userService.updatePrice(loginInfo.getId(), 0.0, 0.0, record.getSellPrice(), 0.0, profitPrice);
+		
+		customerService.updatePrice(record.getCustomerId(), 0.0, 0, record.getSellPrice(), 
+				record.getNumber(), profitPrice, 0.0);
 		return record.getId();
 	}
 	
@@ -153,6 +161,7 @@ public class RecordService {
 		good.setRecordId(recordIndex);
 		good.setStockNumber(recordNumber - needNumber);
 		good.setProfitPrice(sellPrice - productionPrice);
+		good.setProductionPrice(productionPrice);
 		
 		return good;
 	}
@@ -179,6 +188,14 @@ public class RecordService {
 		userService.updatePrice(loginInfo.getId(), 
 				0.0, 0.0, 0.0, record.getDamagePrice(), 0.0);
 		
+		//更新商品折损费
+		if(record.getGoodId() > 0) {
+			Good good = goodService.selectOne(record.getGoodId());
+			good.setDamagePrice(good.getDamagePrice() + record.getDamagePrice());
+			goodService.update(good, loginInfo);
+		}
+		
+		customerService.updatePrice(record.getCustomerId(), 0.0, 0, 0.0, 0, 0.0, record.getDamagePrice());
 		return record.getId();
 	}
 	

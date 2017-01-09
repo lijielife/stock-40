@@ -15,21 +15,32 @@
 		<result property="userId" column="fk_user_id" />
 		<result property="createTime" column="create_time" />
 		
+		<result property="productionPrice" column="production_price" />
+		<result property="number" column="number" />
+		<result property="sellPrice" column="sell_price" />
+		<result property="sellNumber" column="sell_number" />
+		<result property="damagePrice" column="damage_price" />
+		<result property="profitPrice" column="profit_price" />
+		
 	</resultMap>
     
     <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_customer(
-			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`) 
+			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`,
+			`production_price`, `number`, `sell_price`, `sell_number`, `damage_price`, `profit_price`) 
 		VALUES(
-			#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime})
+			#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime},
+			#{productionPrice}, #{number}, #{sellPrice}, #{sellNumber}, #{damagePrice}, #{profitPrice})
 	</insert>
 	
 	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_customer(
-			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`) 
+			`type`, `name`, `mobile`, `company`, `remark`, `fk_user_id`, `create_time`,
+			`production_price`, `number`, `sell_price`, `sell_number`, `damage_price`, `profit_price`) 
 		VALUES
 		<foreach collection="list" item="item" index="index" separator="," > 
-			(#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime})
+			(#{type}, #{name}, #{mobile}, #{company}, #{remark}, #{userId}, #{createTime},
+			#{productionPrice}, #{number}, #{sellPrice}, #{sellNumber}, #{damagePrice}, #{profitPrice})
 		</foreach>
 	</insert>
 
@@ -40,7 +51,14 @@
 		`mobile` = #{mobile},
 		`company` = #{company},
 		`remark` = #{remark},
-		`fk_user_id` = #{userId}
+		`fk_user_id` = #{userId},
+		
+		`production_price` = #{productionPrice},
+		`number` = #{number},
+		`sell_price` = #{sellPrice},
+		`sell_number` = #{sellNumber},
+		`damage_price` = #{damagePrice},
+		`profit_price` = #{profitPrice}
 		WHERE pk_id = #{id}
 	</update>
 
@@ -115,5 +133,16 @@
         	and name like CONCAT('%', '${name}', '%')
         </if>
     </select>
+    
+	<update id="updatePrice" parameterType="Map">
+		UPDATE t_customer
+		SET `production_price` = `production_price` + #{productionPrice},
+		`number` = `number` + #{number},
+		`sell_price` = `sell_price` + #{sellPrice},
+		`sell_number` = `sell_number` + #{sellNumber},
+		`damage_price` = `damage_price` + #{damagePrice},
+		`profit_price` = `profit_price` + #{profitPrice}
+		WHERE pk_id = #{id}
+	</update>
 
 </mapper>
