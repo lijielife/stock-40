@@ -12,7 +12,8 @@
 		<title>新增记录</title>
 
 		<!-- Bootstrap core CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+		<link href="//cdn.bootcss.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-reset.css" rel="stylesheet">
 		<!--external css-->
 		<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -64,11 +65,6 @@
 				color: #fff;
 			}
 			
-			.selected:hover,
-			.selected:focus {
-				color: #fff;
-			}
-			
 			.panel-heading-xs {
 				padding: 5px 15px;
 			}
@@ -82,13 +78,15 @@
 				position: absolute;
 				z-index: 1;
 			}
-			h4 small{
-			  font-size: 12px;
-		    display: block;
-		    padding-top: 5px;
-		    color: #f1cb24;
+			
+			h4 small {
+				font-size: 12px;
+				display: block;
+				padding-top: 5px;
+				color: #f1cb24;
 			}
-			.breadcrumb{
+			
+			.breadcrumb {
 				margin-bottom: 5px;
 			}
 		</style>
@@ -368,6 +366,12 @@
 								<span>商品</span>
 							</a>
 						</li>
+						<li>
+	                        <a href="records.html" class="">
+	                            <i class="icon-book"></i>
+	                            <span>进货/销售/退货记录</span>
+	                        </a>                     
+	                    </li>
 
 						<li>
 							<a class="log-out" href="login.html">
@@ -384,15 +388,17 @@
 			<section id="main-content">
 				<section class="wrapper">
 					<div class="row">
-              <div class="col-lg-12">
-                  <!--breadcrumbs start -->
-                  <ul class="breadcrumb">
-                      <li><a href="records.html"><i class="icon-home"></i> 记录列表</a></li>
-                      <li class="active">新增记录</li>
-                  </ul>
-                  <!--breadcrumbs end -->
-              </div>
-          </div>
+						<div class="col-lg-12">
+							<!--breadcrumbs start -->
+							<ul class="breadcrumb">
+								<li>
+									<a href="records.html"><i class="icon-home"></i> 记录列表</a>
+								</li>
+								<li class="active">新增记录</li>
+							</ul>
+							<!--breadcrumbs end -->
+						</div>
+					</div>
 					<!-- page start-->
 					<div class="row">
 						<div class="col-lg-12">
@@ -457,15 +463,15 @@
 											<h4 class="modal-title">供应商-列表<small>只显示200名，如果不能满足可以通过姓名查找。</small></h4>
 										</div>
 										<div class="modal-body">
-											<section class="panel">												
+											<section class="panel">
 												<div class="panel-body" id="myModal-body">
-													<div class="form-horizontal tasi-form">														
+													<div class="form-horizontal tasi-form">
 														<input class="form-control input-lg m-bot15" id="find-i" type="text" oninput="OnInput(event)" onpropertychange="OnPropChanged(event)" placeholder="按姓名查找">
 														<div id="ma-control">
-															<table class="table table-striped table-advance table-hover">		                             
-		                              <tbody id="m-list">
-		                              </tbody>
-		                          </table>  
+															<table class="table table-striped table-advance table-hover">
+																<tbody id="m-list">
+																</tbody>
+															</table>
 
 														</div>
 													</div>
@@ -484,35 +490,41 @@
 		</section>
 
 		<!-- js placed at the end of the document so the pages load faster -->
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.scrollTo.min.js"></script>
-		<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+		<!--<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>-->
+		<script src="//cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+	    <script src="//cdn.bootcss.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<!--<script src="js/jquery.scrollTo.min.js"></script>-->
+		<script src="//cdn.bootcss.com/jquery-scrollTo/1.4.6/jquery.scrollTo.min.js"></script>
+		<!--<script src="js/jquery.nicescroll.js" type="text/javascript"></script>-->
+		<script src="//cdn.bootcss.com/jquery.nicescroll/3.5.1/jquery.nicescroll.min.js"></script>
 
 		<!--common script for all pages-->
 		<script src="js/common-scripts.js"></script>
-		<script src="js/jquery.cookie.js"></script>
+		<!--<script src="js/jquery.cookie.js"></script>-->
+		<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 		<script type="text/javascript">
 			var ticket = $.cookie("ticket");
-			$(function() {				
+			$(function() {
 				loginFlag();
-				
 				$(".log-out").click(function() { //每次登录时把cookie中ticket清除
-					$.cookie("ticket", '', {expires: -1});
+					$.cookie("ticket", '', {
+						expires: -1
+					});
 				});
 				$(".btn-info-g").click(function() {
 					$(".btn-info-g").removeClass('selected');
 					$(this).addClass('selected');
 					initAddModal();
 				});
-				$('#myModal').on('hide.bs.modal', function () {
-				  $("#find-i").val('');
+				$('#myModal').on('hide.bs.modal', function() {
+					$("#find-i").val('');
 				})
-				$("#add-m").click(function(){
+				$("#add-m").click(function() {
 					var type = $(".selected").attr("data-v");
 					addM(type);
 				});
-				
+
 			});
 
 			//判断当前用户是否已经登录
@@ -537,14 +549,15 @@
 				}
 			}
 
-			function kehu(type,name) {				
+			function kehu(type, name) {
+				name = $.trim(name);
 				$.ajax({
 					type: "GET",
 					url: 'http://123.57.141.203:8314/customers',
 					dataType: 'json',
 					data: {
 						"type": type,
-						"name":name,
+						"name": name,
 						"page": 1,
 						"pageSize": 200
 					},
@@ -554,25 +567,25 @@
 					success: function(data) {
 						console.log(data);
 						if(data.code == 200) {
-							if(type == 1){
+							if(type == 1) {
 								$(".modal-title").html('供应商-列表<small>只显示200名，如果不能满足可以通过姓名查找。</small>');
 							} else {
 								$(".modal-title").html('销售客户-列表<small>只显示200名，如果不能满足可以通过姓名查找。</small>');
 							}
-							$("#find-i").attr('placeholder','按姓名查找');
-							
+							$("#find-i").attr('placeholder', '按姓名查找');
+
 							$("#m-list").empty();
-							if(data.total != 0){
+							if(data.total != 0) {
 								var m = data.data;
 								for(var i = 0; i < m.length; i++) {
-									$("#m-list").append('<tr>'+
-		              		'<td>'+m[i].name+'</td>'+
-		                      '<td>t:'+m[i].mobile+'</td>'+
-		                      '<td><button class="btn btn-success" data-v="'+m[i].name+' t:'+m[i].mobile+'" data-id='+m[i].id+'>选</button></td>'+
-		              	'</tr>');
-								}								
+									$("#m-list").append('<tr>' +
+										'<td>' + m[i].name + '</td>' +
+										'<td>t:' + m[i].mobile + '</td>' +
+										'<td><button class="btn btn-success" data-v="' + m[i].name + ' t:' + m[i].mobile + '" data-id=' + m[i].id + '>选</button></td>' +
+										'</tr>');
+								}
 								$(".btn-success").click(function() {
-									$('#supplier').attr('data-id',$(this).attr('data-id'));
+									$('#supplier').attr('data-id', $(this).attr('data-id'));
 									$('#supplier').html($(this).attr('data-v'));
 									$("#myModal").modal("hide");
 								});
@@ -593,17 +606,25 @@
 					}
 				});
 			}
-			
-			function goods(name) {				
+
+			function goods(name) {
+				name = $.trim(name);
+				if(name == '' || name == undefined) {
+					dataN = {
+						"page": 1,
+						"pageSize": 200
+					};
+				} else {
+					dataN = {
+						"name": name,
+						"limit": 200
+					};
+				}
 				$.ajax({
 					type: "GET",
 					url: 'http://123.57.141.203:8314/goods',
 					dataType: 'json',
-					data: {
-						"name":name,
-						"page": 1,
-						"pageSize": 200
-					},
+					data: dataN,
 					headers: {
 						"ticket": ticket
 					},
@@ -611,20 +632,20 @@
 						console.log(data);
 						if(data.code == 200) {
 							$(".modal-title").html('商品-列表<small>只显示200名，如果不能满足可以通过名称查找。</small>');
-							$("#find-i").attr('placeholder','按名称查找');
-							
+							$("#find-i").attr('placeholder', '按名称查找');
+
 							$("#m-list").empty();
-							if(data.total != 0){
+							if(data.data.length != 0) {
 								var m = data.data;
 								for(var i = 0; i < m.length; i++) {
-									$("#m-list").append('<tr>'+
-		              		'<td>'+m[i].name+'</td>'+
-		                      '<td>库存:'+m[i].number+'</td>'+
-		                      '<td><button class="btn btn-success" data-v="'+m[i].name+' 库存:'+m[i].number+'" data-id='+m[i].id+'>选</button></td>'+
-		              	'</tr>');
-								}								
+									$("#m-list").append('<tr>' +
+										'<td>' + m[i].name + '</td>' +
+										'<td>库存:' + m[i].number + '</td>' +
+										'<td><button class="btn btn-success" data-v="' + m[i].name + ' 库存:' + m[i].number + '" data-id=' + m[i].id + '>选</button></td>' +
+										'</tr>');
+								}
 								$(".btn-success").click(function() {
-									$('#goods').attr('data-id',$(this).attr('data-id'));
+									$('#goods').attr('data-id', $(this).attr('data-id'));
 									$('#goods').html($(this).attr('data-v'));
 									$("#myModal").modal("hide");
 								});
@@ -646,22 +667,41 @@
 				});
 			}
 
-			function addM(type) {	
+			function addM(type) {
 				var customerId = $("#supplier").attr('data-id');
 				var goodId = $("#goods").attr('data-id');
-				var number = $("#number").val().replace(/\s/g, "");	
+				var number = $("#number").val().replace(/\s/g, "");
 				var data;
-				if(type==1){
+				if(type == 1) {
 					var productionPrice = $("#productionPrice").val().replace(/\s/g, "");
 					var otherPrice = $("#otherPrice").val().replace(/\s/g, "");
-					data = {"type":1,"customerId":customerId,"goodId":goodId,"number":number,"productionPrice":productionPrice,"otherPrice":otherPrice};
-				} else if(type==2){
+					data = {
+						"type": 1,
+						"customerId": customerId,
+						"goodId": goodId,
+						"number": number,
+						"productionPrice": productionPrice,
+						"otherPrice": otherPrice
+					};
+				} else if(type == 2) {
 					var sellProce = $("#sellProce").val().replace(/\s/g, "");
-					data = {"type":2,"customerId":customerId,"goodId":goodId,"number":number,"sellProce":sellProce};
-				} else{
+					data = {
+						"type": 2,
+						"customerId": customerId,
+						"goodId": goodId,
+						"number": number,
+						"sellProce": sellProce
+					};
+				} else {
 					var damagePrice = $("#damagePrice").val().replace(/\s/g, "");
-					data = {"type":3,"customerId":customerId,"goodId":goodId,"number":number,"damagePrice":damagePrice};
-				}				
+					data = {
+						"type": 3,
+						"customerId": customerId,
+						"goodId": goodId,
+						"number": number,
+						"damagePrice": damagePrice
+					};
+				}
 				$.ajax({
 					type: "POST",
 					url: 'http://123.57.141.203:8314/records ',
@@ -672,7 +712,8 @@
 						"ticket": ticket
 					},
 					success: function(data) {
-						if(data.code == 200) {							
+						if(data.code == 200) {
+							location.href = "records.html";
 							console.log(data);
 						} else {
 							console.log(data);
@@ -686,11 +727,11 @@
 			}
 
 			function modal(type) {
-				$("#find-i").attr("data-type",type);
+				$("#find-i").attr("data-type", type);
 				//type:1 供应商 2 销售客户 3商品				
-				if(type==3){
+				if(type == 3) {
 					goods();
-				}else{
+				} else {
 					kehu(type);
 				}
 			}
@@ -784,25 +825,26 @@
 					'</div>' +
 					'</div>');
 			}
-			function OnInput (event) {
+
+			function OnInput(event) {
 				var type = $(event.target).attr('data-type')
-		   	if(type == 3){
+				if(type == 3) {
 					goods(event.target.value);
-				}else{
-					kehu(type,event.target.value);
+				} else {
+					kehu(type, event.target.value);
 				}
-		  }
-		  // Internet Explorer
-		  function OnPropChanged (event) {
-		      if (event.propertyName.toLowerCase () == "value") {
-		        var type = $(event.target).attr('data-type')
-		        if(type == 3){
-							goods(event.target.value);
-						}else{
-							kehu(type,event.target.value);
-						}
-		      }
-		  } 
+			}
+			// Internet Explorer
+			function OnPropChanged(event) {
+				if(event.propertyName.toLowerCase() == "value") {
+					var type = $(event.target).attr('data-type')
+					if(type == 3) {
+						goods(event.target.value);
+					} else {
+						kehu(type, event.target.value);
+					}
+				}
+			}
 		</script>
 
 	</body>

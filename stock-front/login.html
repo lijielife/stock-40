@@ -11,7 +11,8 @@
     <title>登陆</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="//cdn.bootcss.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -104,8 +105,10 @@
       </div>
 
     </div>
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.cookie.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <!--<script src="js/jquery.js"></script>-->
+    <!--<script src="js/jquery.cookie.js"></script>-->
+    <script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script type="text/javascript">
         $(function(){
             if ($.cookie("remember") == "true") { 
@@ -190,18 +193,15 @@
                         if (document.getElementById('remember').checked == true) { 
                             $.cookie("remember", "true", { expires: 7 }); // 存储一个带7天期限的 cookie 
                             $.cookie("mobile", mobile, { expires: 7 }); // 存储一个带7天期限的 cookie 
-                            $.cookie("password", password, { expires: 7 }); // 存储一个带7天期限的 cookie 
-                            $.cookie("ticket", data.ticket, { expires: 7 }); // 存储一个带7天期限的 cookie 
-                            $.cookie("companyName", data.loginInfo.companyName, { expires: 7 }); 
-                            $.cookie("name", data.loginInfo.name, { expires: 7 });
+                            $.cookie("password", password, { expires: 7 }); // 存储一个带7天期限的 cookie                             
                         }else { 
                             $.cookie("remember", "false", { expires: -1 }); 
                             $.cookie("mobile", '', { expires: -1 }); 
-                            $.cookie("password", '', { expires: -1 }); 
-                            $.cookie("ticket", '', { expires: -1 }); 
-                            $.cookie("companyName", '', { expires: -1 }); 
-                            $.cookie("name", '', { expires: -1 });
+                            $.cookie("password", '', { expires: -1 });                             
                         }
+                        $.cookie("ticket", data.ticket, { expires: 7 }); // 存储一个带7天期限的 cookie 
+                        $.cookie("companyName", data.loginInfo.companyName, { expires: 7 }); 
+                        $.cookie("name", data.loginInfo.name, { expires: 7 });
                         window.location.href='home.html';
                     }else {
                         $("#mobile").after('<label class="error is-visible">'+data.desc+'</label>');
