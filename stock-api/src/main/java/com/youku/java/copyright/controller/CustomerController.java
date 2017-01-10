@@ -48,7 +48,7 @@ public class CustomerController extends BaseController{
 	@ResponseBody
 	public Object update(User loginInfo, @RequestBody String body){
 		Customer good = validation.getObject(body, Customer.class, new String[]{"id", "name"});
-		customerService.update(good, loginInfo);
+		customerService.updateHttp(good, loginInfo);
 		Map<String,Object> result = new HashMap<String, Object>();
 		result.put("id", good.getId());
 		return result;

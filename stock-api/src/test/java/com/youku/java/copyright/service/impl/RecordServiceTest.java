@@ -20,19 +20,19 @@ public class RecordServiceTest {
 //	@Test
 	public void sell() {
 		User loginInfo = new User();
-		loginInfo.setId(1l);
+		loginInfo.setId(2l);
 		
 		Record record = new Record();
-		record.setCustomerId(1l);
-		record.setGoodId(1l);
+		record.setCustomerId(2l);
+		record.setGoodId(2l);
 		record.setNumber(20);
 		record.setSellPrice(6000.0);
-		record.setUserId(1l);
+		record.setUserId(2l);
 		
 		recordService.sell(record, loginInfo);
 	}
 	
-	@Test
+//	@Test
 	public void stock() {
 		User loginInfo = new User();
 		loginInfo.setId(2l);

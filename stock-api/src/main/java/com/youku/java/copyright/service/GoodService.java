@@ -54,6 +54,14 @@ public class GoodService {
 		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
 			throw new PermissionDeniedException("权限不足");
 		}
+		goodMapper.update(good);
+	}
+	
+	public void updateHttp(Good good, User loginInfo) {
+		Good src = selectOne(good.getId());
+		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new PermissionDeniedException("权限不足");
+		}
 		try{
 			src = (Good) MergerUtil.merger(src, good);
 		}catch(Exception e) {
@@ -82,16 +90,16 @@ public class GoodService {
 		return goodMapper.insert(good);
 	}
 	
-	public int updateNumber(long id, int number, long recordId) {
-		int update = goodMapper.updateNumber(id, number);
+	public int updateNumber(long id, int number, long recordId, double productionPrice) {
+		int update = goodMapper.updateNumber(id, number, productionPrice);
 		if(update <= 0) {
-			update = updateNumberRecord(id, number, recordId);
+			update = updateNumberRecord(id, number, recordId, productionPrice);
 		}
 		return update;
 	}
 	
-	private int updateNumberRecord(long id, int number, long recordId) {
-		return goodMapper.updateNumberRecord(id, number, recordId);
+	private int updateNumberRecord(long id, int number, long recordId, double productionPrice) {
+		return goodMapper.updateNumberRecord(id, number, recordId, productionPrice);
 	}
 	
 	public void checkOwner(User loginInfo, long id) {

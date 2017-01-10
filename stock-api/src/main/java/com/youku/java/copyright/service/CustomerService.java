@@ -55,7 +55,7 @@ public class CustomerService {
 		customerMapper.delete(id);
 	}
 	
-	public void update(Customer customer, User loginInfo) {
+	public void updateHttp(Customer customer, User loginInfo) {
 		
 		//如果要更新的数据已存在则提示异常
 		Customer tmp = selectByMobile(loginInfo.getId(), customer.getType(), customer.getMobile());
@@ -74,6 +74,22 @@ public class CustomerService {
 		}
 		
 		customerMapper.update(src);
+	}
+
+	
+	public void update(Customer customer, User loginInfo) {
+		
+		//如果要更新的数据已存在则提示异常
+		Customer tmp = selectByMobile(loginInfo.getId(), customer.getType(), customer.getMobile());
+		if(tmp != null && tmp.getId() != customer.getId()) {
+			throw new DataExistException("已存在的联系人");
+		}
+		
+		Customer src = customerMapper.selectOne(customer.getId());
+		if(src.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new PermissionDeniedException("权限不足");
+		}
+		customerMapper.update(customer);
 	}
 	
 	public Customer selectByMobile(long userId, int type, String mobile) {
@@ -99,4 +115,12 @@ public class CustomerService {
 		return customerMapper.selectListByIds(ids);
 	}
 	
+	public int updatePrice(Long id, double productionPrice, int number, double sellPrice, int sellNumber,
+			double profitPrice, double damagePrice) {
+		if(id == null || id <= 0) {
+			return 0;
+		}
+		return customerMapper.updatePrice(id, productionPrice, number, sellPrice, sellNumber, 
+				profitPrice, damagePrice);
+	}
 }

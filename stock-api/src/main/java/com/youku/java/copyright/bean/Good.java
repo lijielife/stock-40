@@ -141,6 +141,30 @@ public class Good{
 		return createTime;
 	}
 
+	public Double getProductionPrice() {
+		return productionPrice;
+	}
+
+	public void setProductionPrice(Double productionPrice) {
+		this.productionPrice = productionPrice;
+	}
+
+	public Double getSellPrice() {
+		return sellPrice;
+	}
+
+	public void setSellPrice(Double sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
+	public Double getDamagePrice() {
+		return damagePrice;
+	}
+
+	public void setDamagePrice(Double damagePrice) {
+		this.damagePrice = damagePrice;
+	}
+
 	public void setCreateTime(String createTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {

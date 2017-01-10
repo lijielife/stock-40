@@ -11,7 +11,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'application'
 
-version = '0.0.8-release'
+version = '0.0.9-release'
 group = 'com.cls.java'
 
 sourceCompatibility = 1.8

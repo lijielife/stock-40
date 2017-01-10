@@ -49,7 +49,7 @@ public class GoodController extends BaseController{
 	@ResponseBody
 	public Object update(User loginInfo, @RequestBody String body){
 		Good good = validation.getObject(body, Good.class, new String[]{"id", "name"});
-		goodService.update(good, loginInfo);
+		goodService.updateHttp(good, loginInfo);
 		Map<String,Object> result = new HashMap<String, Object>();
 		result.put("id", good.getId());
 		return result;
