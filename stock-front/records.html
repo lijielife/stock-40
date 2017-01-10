@@ -44,7 +44,7 @@
     		padding: 0;
     	}
   		.popover{
-  			width: 170px;
+  			width: 225px;
   		}
   		.btn-info-g{
   			background-color: #fff;
@@ -76,7 +76,17 @@
   			padding-right: 0;
     		width: 20px;
   		}
-  		
+  		.span-i{
+  			color: #aaa;
+    		padding: 0 3px;
+  		}
+  		.span-m{
+  			color: #FCB322;
+  			padding: 0 3px;
+  		}
+  		.table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+			    padding: 8px 5px;
+			}
   		
     </style>
   </head>
@@ -390,36 +400,14 @@
                               <thead>
 	                              <tr>
 	                              		<th></th>
-	                                  <th>客户名称</th>
-	                                  <th>商品名称</th>
+	                                  <th>客户</th>
+	                                  <th>商品</th>
 	                                  <th>详情</th>
+	                                  <th>花费</th>
 	                              </tr>
                               </thead>
                               <tbody id="records-list">
-	                              <tr>
-	                              	<td><span class="label label-primary label-icon">存</span></td>
-	                              	<td>xxx</td>
-				                          <td>xxx</td>
-				                          <td>
-				                            <button data-original-title="详细信息" data-content="公司名称：'+records[i].number+'<br>备注：'+records[i].productionPrice+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>
-				                          </td>
-				                      	</tr>
-				                      	<tr>
-	                              	<td><span class="label label-success label-icon">售</span></td>
-	                              	<td>xxx</td>
-				                          <td>xxx</td>
-				                          <td>
-				                            <button data-original-title="详细信息" data-content="公司名称：'+records[i].number+'<br>备注：'+records[i].productionPrice+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>
-				                          </td>
-				                      	</tr>
-				                      	<tr>
-	                              	<td><span class="label label-warning label-icon">退</span></td>
-	                              	<td>xxx</td>
-				                          <td>xxx</td>
-				                          <td>
-				                            <button data-original-title="详细信息" data-content="公司名称：'+records[i].number+'<br>备注：'+records[i].productionPrice+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>
-				                          </td>
-				                      	</tr>
+	                              
                               </tbody>
                           </table>                          
                       </section>
@@ -493,9 +481,10 @@
 		            		for(var i=0;i<records.length;i++){
 		            			$("#records-list").append('<tr><td>'+typeN(records[i].type)+'</td>'+
 		            						'<td>'+records[i].customerName+'</td>'+
-	                          '<td>'+records[i].goodName+'</td>'+
+	                          '<td>'+records[i].goodName+'<span class="span-i">*</span>'+records[i].number+'</td>'+
+	                          '<td>'+costMoney(records[i])+'<span class="span-m">¥</span></td>'+
 	                          '<td>'+
-	                              '<button data-original-title="详细信息" data-content="商品数量：'+records[i].number+'<br>产品费用：'+records[i].productionPrice+'<br>其他费用：'+records[i].otherPrice+'<br>销售价格：'+records[i].sellPrice+'<br>折损费用：'+records[i].damagePrice+'<br>利润：'+records[i].profitPrice+'<br>创建时间：'+records[i].createTime+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+	                              '<button data-original-title="详细信息" data-content="'+details(records[i])+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
 	                          '</td>'+
 	                      '</tr>');
 		            		}
@@ -517,6 +506,28 @@
 	            }
 	        });
 	    } 
+	    function costMoney(record){
+	    	if(record.type == 1){
+	    		return "-"+(record.productionPrice+record.otherPrice);
+	    	} else if(record.type == 2){
+	    		return "+"+record.sellPrice;
+	    	} else if(record.type == 3){
+	    		return "-"+record.damagePrice;
+	    	} else {
+	    		return "异常";
+	    	}
+	    }
+	    function details(record){
+	    	if(record.type==1){
+	    		return '产品费用：'+record.productionPrice+'<br>其他费用：'+record.otherPrice+'<br>创建时间：'+record.createTime;
+	    	}else if(record.type==2){
+	    		return '销售价格：'+record.sellPrice+'<br>利润：'+record.profitPrice+'<br>创建时间：'+record.createTime;
+	    	}else if(record.type==3){
+	    		return '折损费用：'+record.damagePrice+'<br>创建时间：'+record.createTime;
+	    	}else{
+	    		return '异常数据';
+	    	}
+	    }
 	    function typeN(type){
 	    	if(type == 1){
 	    		return '<span class="label label-primary label-icon">进</span>';
