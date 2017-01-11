@@ -551,7 +551,7 @@
 	            			$("#customers-list").append('<tr><td>'+suppliers[i].name+'</td>'+
                           '<td>'+suppliers[i].mobile+'</td>'+
                           '<td>'+
-                              '<button data-original-title="详细信息" data-content="公司名称：'+suppliers[i].company+'<br>备注：'+suppliers[i].remark+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+                              '<button data-original-title="详细信息" data-content="公司名称：'+suppliers[i].company+'<br>总销售额：'+suppliers[i].sellPrice+' ¥<br>总销售量：'+suppliers[i].sellNumber+'<br>总利润：'+suppliers[i].profitPrice+' ¥<br>备注：'+suppliers[i].remark+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
                               '<button class="btn btn-primary btn-xs" data-reactid="updateSupplier" data-id="'+suppliers[i].id+'"><i class="icon-pencil"></i></button>'+
                               '<button class="btn btn-danger btn-xs" data-reactid="delectSupplier" data-id="'+suppliers[i].id+'"><i class="icon-trash "></i></button>'+
                           '</td>'+

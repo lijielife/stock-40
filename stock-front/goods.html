@@ -398,7 +398,7 @@
                               <thead>
 	                              <tr>
 	                                  <th>名称</th>
-	                                  <th>数量</th>
+	                                  <th>库存</th>
 	                                  <th>单价</th>
 	                                  <th>操作</th>
 	                              </tr>
@@ -558,7 +558,7 @@
                           '<td>'+goods[i].number+'</td>'+
                           '<td>'+goods[i].unitPrice+'</td>'+
                           '<td>'+
-                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'<br>总进货额：'+goods[i].productionPrice+' ¥<br>总销售额：'+goods[i].sellPrice+' ¥<br>总销售量：'+goods[i].sellNumber+'<br>总利润：'+goods[i].profitPrice+' ¥<br>总折损：'+goods[i].damagePrice+' ¥" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
                               '<button class="btn btn-primary btn-xs" data-reactid="updateGoods" data-id="'+goods[i].id+'"><i class="icon-pencil"></i></button>'+
                               '<button class="btn btn-danger btn-xs" data-reactid="delectGoods" data-id="'+goods[i].id+'"><i class="icon-trash "></i></button>'+
                           '</td>'+

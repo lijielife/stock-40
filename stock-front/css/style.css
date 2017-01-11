@@ -6,7 +6,7 @@ Website: http://thevectorlab.net/
 */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);*/
 
 body {
     color: #797979;
@@ -754,6 +754,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .state-overview .value h1 {
     font-weight: 300;
+    color: #ff6100;
 }
 
 .state-overview .symbol i {
@@ -762,15 +763,15 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .state-overview .symbol {
-    width: 40%;
-    padding: 25px 15px;
+    width: 34%;
+    padding: 15px 0px;
     -webkit-border-radius: 4px 0px 0px 4px;
     border-radius: 4px 0px 0px 4px;
 }
 
 .state-overview .value {
-    width: 58%;
-    padding-top: 21px;
+    width: 64%;
+    padding-top: 12px;
 }
 
 .state-overview .terques {
@@ -788,6 +789,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .state-overview .blue {
     background: #57c8f2;
 }
+.state-overview .green{
+	background: #5cb85c;
+} 
 
 /*main chart*/
 
