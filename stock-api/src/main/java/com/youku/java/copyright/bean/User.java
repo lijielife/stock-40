@@ -41,8 +41,6 @@ public class User{
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date createTime;
 	
-	private Double stockPrice;
-	
 	private Double productionPrice;
 	
 	private Double otherPrice;
@@ -87,14 +85,6 @@ public class User{
 
 	public Date getCreateTime() {
 		return createTime;
-	}
-
-	public Double getStockPrice() {
-		return stockPrice;
-	}
-
-	public void setStockPrice(Double stockPrice) {
-		this.stockPrice = stockPrice;
 	}
 
 	public Double getProductionPrice() {
