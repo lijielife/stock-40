@@ -138,7 +138,7 @@
 								<span>仪表盘</span>
 							</a>
 						</li>
-						<li class="active">
+						<li >
 							<a href="customers.html" class="">
 								<i class="icon-book"></i>
 								<span>客户</span>
@@ -156,7 +156,7 @@
 								<span>商品</span>
 							</a>
 						</li>
-						<li>
+						<li class="active">
 							<a href="records.html" class="">
 								<i class="icon-book"></i>
 								<span>进货/销售/退货记录</span>
@@ -488,7 +488,7 @@
 				}
 				$.ajax({
 					type: "POST",
-					url: 'http://123.57.141.203:8314/records ',
+					url: 'http://123.57.141.203:8314/records',
 					contentType: "application/json; charset=utf-8",
 					dataType: 'json',
 					data: JSON.stringify(data),

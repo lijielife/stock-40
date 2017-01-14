@@ -295,7 +295,7 @@
 						}
 					}
 					
-					for(var i=0;i<12;i++){
+					for(var i=(dataN.length-1);i>0;i--){
 						$(".custom-bar-chart").append('<div class="bar">'+
 							'<div class="title">'+dataN[i].time.substr(2,5)+'</div>'+
 							'<div class="value tooltips" data-original-title="'+getData(dataN[i],dataType)+'" data-toggle="tooltip" data-placement="top" style="height: '+(getData(dataN[i],dataType)/maxData)*100+'%;"></div>'+
@@ -308,7 +308,7 @@
 							maxData = getData(dataN[i],dataType);
 						}
 					}					
-					for(var i=0;i<30;i++){
+					for(var i=(dataN.length-1);i>0;i--){
 						$(".custom-bar-chart").append('<div class="bar">'+
 							'<div class="title">'+dataN[i].time.substr(5,5)+'</div>'+
 							'<div class="value tooltips" data-original-title="'+getData(dataN[i],dataType)+'" data-toggle="tooltip" data-placement="top" style="height: '+(getData(dataN[i],dataType)/maxData)*100+'%;"></div>'+
