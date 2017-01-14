@@ -535,7 +535,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .top-nav ul.top-menu > li .dropdown-menu.logout {
-    width: 268px !important;
+    width: 160px !important;
 
 }
 
@@ -891,7 +891,34 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     color: #fff;
 }
 
-.custom-bar-chart .bar.doted:before {
+.custom-bar-chart > div:nth-child(odd).bar:before{
+	background: #bfc2cd;
+    content: "";
+    height: 8px;
+    left: 50%;
+    margin-left: -3px;
+    margin-top: -25px;
+    position: absolute;
+    width: 8px;
+    z-index: -1;
+}
+.custom-bar-chart > div:nth-child(odd).bar:after{
+	content: '';
+    position: absolute;
+    z-index: -1;
+    margin-top: -10px;
+    left: 50%;
+    margin-left: 0;
+    height: 100%;
+    width: 1px;
+    background: transparent;
+    border-left: 1px dashed #d6d9e0;
+}
+.custom-bar-chart > div:nth-child(odd).bar .title{
+	top: -42px;
+    font-size: 10px;
+}
+/*.custom-bar-chart .bar.doted:before {
     background: #bfc2cd;
     content: "";
     height: 8px;
@@ -919,7 +946,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .custom-bar-chart .bar.doted .title {
     top: -42px;
     font-size: 10px;
-}
+}*/
 
 
 /*spark line*/
@@ -3300,6 +3327,7 @@ table.sliders tr td {
     background-color: #2A3542;
     color: #41cac0;
     border-left: 1px solid transparent;
+    text-indent: -7px;
 }
 .has-switch span.switch-right {
     border-radius: 0 30px 30px 0;
@@ -3953,4 +3981,67 @@ span.customSelect.changed {
 }
 .customSelectInner {
     background:url(../img/customSelect-arrow.gif) no-repeat center right;
+}
+/*分页*/
+.fenye {
+	padding: 10px 0;
+	border-top: 1px #eee solid;
+}
+
+.fenye ul {
+	height: 28px;
+    width: 270px;
+    margin: auto;
+}
+
+.fenye ul li {
+	float: left;
+	margin-left: 5px;
+	padding: 4px 6px;
+	border: 1px solid #ccc;
+	font-weight: bold;
+	cursor: pointer;
+	color: #999;
+}
+
+.fenye ul li a {
+	color: #999;
+}
+
+.fenye ul li.xifenye {
+	width: 50px;
+	text-align: center;
+	float: left;
+	position: relative;
+	cursor: pointer;
+}
+
+.fenye ul li .xab {
+	float: left;
+	position: absolute;
+	width: 50px;
+	border: 1px solid #ccc;
+	max-height: 123px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	bottom: 28px;
+	background-color: #fff;
+	display: inline;
+	left: -1px;
+}
+
+.fenye ul li .xab ul {
+	margin-left: 0;
+	padding-bottom: 0;
+}
+
+.fenye ul li .xab ul li {
+	border: 0;
+	padding: 4px 0px;
+	color: #999;
+	width: 34px;
+	margin-left: 0px;
+	text-align: center;
+	line-height: 20px;
+    height: 28px;
 }
