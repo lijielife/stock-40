@@ -18,9 +18,7 @@
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
-    
-    <link rel="stylesheet" href="css/jqpagination.css" /><!--分页-->
+    <link href="css/style-responsive.css" rel="stylesheet" />    
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -51,6 +49,22 @@
   		.popover{
   			width: 170px;
   		}   	
+  		.paging{
+  			padding: 10px 5px;
+  			text-align: center;
+  			height: 50px;
+  		}
+  		.paging .btn{
+  			margin: 0;
+  		}
+  		.paging .btn:first-child{
+  			float: left;
+  		}
+  		.paging .btn:last-child{
+  			float: right;
+  		}
+  		
+  		
     </style>
   </head>
 
@@ -59,242 +73,35 @@
   <section id="container" class="">
       <!--header start-->
       <header class="header white-bg">
-          <div class="sidebar-toggle-box">
-              <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
-          </div>
-          <!--logo start-->
-          <a href="#" class="logo" >客户<span>E</span></a>
-          <!--logo end-->
-          <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-            <ul class="nav top-menu">
-              <!-- settings start -->
-              <li class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="icon-tasks"></i>
-                      <span class="badge bg-success">6</span>
-                  </a>
-                  <ul class="dropdown-menu extended tasks-bar">
-                      <div class="notify-arrow notify-arrow-green"></div>
-                      <li>
-                          <p class="green">You have 6 pending tasks</p>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
-                                  <div class="percent">40%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                      <span class="sr-only">40% Complete (success)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Database Update</div>
-                                  <div class="percent">60%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                      <span class="sr-only">60% Complete (warning)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Iphone Development</div>
-                                  <div class="percent">87%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                      <span class="sr-only">87% Complete</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Mobile App</div>
-                                  <div class="percent">33%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                      <span class="sr-only">33% Complete (danger)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
-                                  <div class="percent">45%</div>
-                              </div>
-                              <div class="progress progress-striped active">
-                                  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                      <span class="sr-only">45% Complete</span>
-                                  </div>
-                              </div>
-
-                          </a>
-                      </li>
-                      <li class="external">
-                          <a href="#">See All Tasks</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- settings end -->
-              <!-- inbox dropdown start-->
-              <li id="header_inbox_bar" class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="icon-envelope-alt"></i>
-                      <span class="badge bg-important">5</span>
-                  </a>
-                  <ul class="dropdown-menu extended inbox">
-                      <div class="notify-arrow notify-arrow-red"></div>
-                      <li>
-                          <p class="red">You have 5 new messages</p>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="img/avatar-mini.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is an example msg.
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="img/avatar-mini2.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jhon Doe</span>
-                                    <span class="time">10 mins</span>
-                                    </span>
-                                    <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="img/avatar-mini3.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jason Stathum</span>
-                                    <span class="time">3 hrs</span>
-                                    </span>
-                                    <span class="message">
-                                        This is awesome dashboard.
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="img/avatar-mini4.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jondi Rose</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is metrolab
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">See all messages</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- inbox dropdown end -->
-              <!-- notification dropdown start-->
-              <li id="header_notification_bar" class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                      <i class="icon-bell-alt"></i>
-                      <span class="badge bg-warning">7</span>
-                  </a>
-                  <ul class="dropdown-menu extended notification">
-                      <div class="notify-arrow notify-arrow-yellow"></div>
-                      <li>
-                          <p class="yellow">You have 7 new notifications</p>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-danger"><i class="icon-bolt"></i></span>
-                              Server #3 overloaded.
-                              <span class="small italic">34 mins</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-warning"><i class="icon-bell"></i></span>
-                              Server #10 not respoding.
-                              <span class="small italic">1 Hours</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-danger"><i class="icon-bolt"></i></span>
-                              Database overloaded 24%.
-                              <span class="small italic">4 hrs</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-success"><i class="icon-plus"></i></span>
-                              New user registered.
-                              <span class="small italic">Just now</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-info"><i class="icon-bullhorn"></i></span>
-                              Application error.
-                              <span class="small italic">10 mins</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">See all notifications</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- notification dropdown end -->
-          </ul>
-          </div>
-          <div class="top-nav ">
-              <ul class="nav pull-right top-menu">
-                  <li>
-                      <input type="text" class="form-control search" placeholder="Search">
-                  </li>
-                  <!-- user login dropdown start-->
-                  <li class="dropdown">
-                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <img alt="" src="img/avatar1_small.jpg">
-                          <span class="username" id="username"></span>
-                          <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu extended logout">
-                          <div class="log-arrow-up"></div>
-                          <li><a href="#"><i class=" icon-suitcase"></i>Profile</a></li>
-                          <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-                          <li><a href="#"><i class="icon-bell-alt"></i> Notification</a></li>
-                          <li><a href="login.html" class="log-out"><i class="icon-key"></i>登出</a></li>
-                      </ul>
-                  </li>
-                  <!-- user login dropdown end -->
-              </ul>
-          </div>
-      </header>
+				<div class="sidebar-toggle-box">
+					<div data-original-title="菜单" data-placement="right" class="icon-reorder tooltips"></div>
+				</div>
+				<!--logo start-->
+				<a href="#" class="logo">客户<span>E</span></a>
+				<!--logo end-->				
+				<div class="top-nav ">
+					<!--search & user info start-->
+					<ul class="nav pull-right top-menu">
+						
+						<!-- user login dropdown start-->
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<img alt="" src="img/avatar1_small.jpg">
+								<span class="username" id="username"></span>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu extended logout">
+								<div class="log-arrow-up"></div>								
+								<li>
+									<a href="login.html" class="log-out"><i class="icon-key"></i> 登出</a>
+								</li>
+							</ul>
+						</li>
+						<!-- user login dropdown end -->
+					</ul>
+					<!--search & user info end-->
+				</div>
+			</header>
       <!--header end-->
       <!--sidebar start-->
       <aside>
@@ -330,12 +137,6 @@
                         <i class="icon-book"></i>
                         <span>进货/销售/退货记录</span>
                     </a>                     
-                  </li>
-                  <li>
-                      <a class="log-out" href="login.html">
-                          <i class="icon-user"></i>
-                          <span>登录页</span>
-                      </a>
                   </li>
               </ul>
               <!-- sidebar menu end-->
@@ -407,20 +208,23 @@
 	                              
                               </tbody>                              
                           </table>
-                          <div class="gigantic pagination">
-                          		
-												    <div class="btn-left">												    	
-												    	<a href="#" class="first" data-action="first">&laquo;</a>
-												    	<!--<a href="#" class="previous" data-action="previous">&lsaquo;</a>-->
-												    </div>
-												    <div class="btn-input">												    
-												    	<input type="text" readonly="readonly" data-max-page="40" />
-												    </div>
-												    <div class="btn-right">												    
-													    <!--<a href="#" class="next" data-action="next">&rsaquo;</a>-->
-													    <a href="#" class="last" data-action="last">&raquo;</a>
-												   	</div>
-													</div>
+                          <div class="fenye">
+											    	<ul>
+											        	<li id="first">首页</li>
+											            <li id="top" onclick="topclick()">上一页</li>
+											            <li class="xifenye" id="xifenye">
+											            	<a id="xiye">1</a>/<a id="mo">1</a>
+											                <div class="xab" id="xab" style="display:none">
+											                	<ul id="uljia">
+											                    	
+											                    </ul>
+											                </div>
+											            </li>
+											            <li id="down" onclick="downclick()">下一页</a></li>
+											            <li id="last">末页</li>
+											        </ul>
+											    
+											    </div>
                           <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                               <div class="modal-dialog">
                                   <div class="modal-content" id="updateModal-content">
@@ -491,15 +295,16 @@
     <!--<script src="js/jquery.cookie.js"></script>-->
     <script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!--分页-->
-    <script type="text/javascript" src="js/jquery.jqpagination.js" ></script>
+    <script src="js/public.js"></script>
     <script type="text/javascript">
-    	$(function(){
-    		var page=1;//初始第一页
-    		var pageSize=2;//初始一页数量
-    		var to = 0;
-    		var ticket = $.cookie("ticket");    		
+    	var page=1;//初始第一页
+		  var pageSize=10;//初始一页数量
+		  var to = 0;
+		  var ticket = $.cookie("ticket"); 
+    	$(function(){   		
     		loginFlag(ticket);    		
     		goods(page);
+    		initPage();
     		$("#add-goods").click(function(){
     			addGoods();
     		});    		
@@ -516,83 +321,6 @@
 				$(".log-out").click(function(){//每次登录时把cookie中ticket清除
 					$.cookie("ticket", '', { expires: -1 }); 
 				});
-				initPage(page,to);
-				function initPage(page,total){ 
-					console.log("total:"+total);
-					var maxPage = total>0?Math.ceil(total/pageSize):1;
-					console.log("maxPage"+maxPage+"page:"+page);					
-					console.log("page:"+page);
-	    		$('.pagination').jqPagination({
-						current_page	: page,
-						link_string		: '',
-						max_page		: maxPage,
-						page_string		: '当前 {current_page} / {max_page}',
-					    paged: function(p) {	
-					    	page = p;
-					      goods(p);  
-					    }
-					});
-	    	}
-				function goods(page){	  
-					console.log(page);
-	        $.ajax({
-	            type : "GET",
-	            url : 'http://123.57.141.203:8314/goods',
-	            dataType:'json',
-	            async: false,
-	            data:{
-                "page":page,
-                "pageSize":pageSize
-	            },   
-	            headers:{
-	            	"ticket":ticket
-	            },	            
-	            success : function(data) {
-	            	console.log(data);
-	            	if(data.code == 200){
-	            		to=data.total;
-	            		$("#goods-list").empty();	            		
-	            		var goods = data.data;
-	            		for(var i=0;i<goods.length;i++){
-	            			$("#goods-list").append('<tr><td>'+goods[i].name+'</td>'+
-                          '<td>'+goods[i].number+'</td>'+
-                          '<td>'+goods[i].unitPrice+'</td>'+
-                          '<td>'+
-                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'<br>总进货额：'+goods[i].productionPrice+' ¥<br>总销售额：'+goods[i].sellPrice+' ¥<br>总销售量：'+goods[i].sellNumber+'<br>总利润：'+goods[i].profitPrice+' ¥<br>总折损：'+goods[i].damagePrice+' ¥" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
-                              '<button class="btn btn-primary btn-xs" data-reactid="updateGoods" data-id="'+goods[i].id+'"><i class="icon-pencil"></i></button>'+
-                              '<button class="btn btn-danger btn-xs" data-reactid="delectGoods" data-id="'+goods[i].id+'"><i class="icon-trash "></i></button>'+
-                          '</td>'+
-                      '</tr>');
-	            		}
-	            		$(".popovers").click(function(){
-					    			$(this).popover({html : true});					    			
-										$(this).popover('show');
-					    		});
-					    		$("button[data-reactid='updateGoods']").click(function(){
-					    			var id = $(this).attr('data-id');
-					    			updateModal(id);
-					    		});
-					    		$("button[data-reactid='delectGoods']").click(function(){
-					    			var id = $(this).attr('data-id');
-					    			delectGoods(id);
-					    		});
-					    		//initPage(page,to);
-					    		/*if(T){
-					    			initPage(data.total);
-					    			T=false;
-					    		}*/
-					    		
-					    		console.log("data.page:"+data.page);
-	            	} else {
-	            		location.href= "login.html";
-	            	}
-	            },
-	            // 调用出错执行的函数
-	            error : function() {
-	                console.log('goods-list error');
-	            }
-	        });
-		    }    	
 	    	function addGoods(){
 	    		var name =$("#name").val().replace(/\s/g,"");
 	        var unitPrice =$("#unitPrice").val().replace(/\s/g,"");
@@ -612,7 +340,7 @@
 	            	if(data.code == 200){
 	            		$("#myModal").modal('hide');  
 	            		goods(page);
-	            		initPage(page,to);
+	            		initPage();
 	            	} else {
 	            		console.log(data);
 	            	}
@@ -623,38 +351,83 @@
 	            }
 	        });
 	    	}
-	    	function updateGoods(id){
-	    		console.log(id);
-	    		var name =$("#_name").val().replace(/\s/g,"");
-	        var unitPrice =$("#_unitPrice").val().replace(/\s/g,"");
-	    		$.ajax({
-	            type : "PUT",
+	    	   	
+    	});
+    	//判断当前用户是否已经登录
+    	function loginFlag(ticket){    		
+    		if(ticket == '' || ticket == undefined){
+    			location.href = 'login.html';
+    		}
+    		$("#username").html($.cookie("name"));
+    	}
+    	function gotoPage(p){
+					page = p;
+					goods(page);
+			}
+    	function initPage(){ 
+				var maxPage = to>0?Math.ceil(to/pageSize):1;	
+				$("#mo").html(maxPage);					
+   		}
+    	function goods(page){	  
+	        $.ajax({
+	            type : "GET",
 	            url : 'http://123.57.141.203:8314/goods',
-	            contentType: "application/json; charset=utf-8",
 	            dataType:'json',
-	            data:JSON.stringify({
-	            	"id":id,
-						    "name":name,
-						    "unitPrice":unitPrice
-	            }),   
+	            async: false,
+	            data:{
+                "page":page,
+                "pageSize":pageSize
+	            },   
 	            headers:{
 	            	"ticket":ticket
 	            },	            
 	            success : function(data) {
+	            	console.log(data);
 	            	if(data.code == 200){
-	            		$("#updateModal").modal('hide');  
-	            		goods(page);
+	            		to=data.total;
+	            		$("#goods-list").empty();	       
+	            		if(data.total == 0){
+	            			$("#goods-list").append('<tr><td style="text-align: center;" colspan=4>没有找到您需要的数据！</td></tr>');
+	            		}else{
+	            			var goods = data.data;
+		            		for(var i=0;i<goods.length;i++){
+		            			$("#goods-list").append('<tr><td>'+goods[i].name+'</td>'+
+	                          '<td>'+goods[i].number+'</td>'+
+	                          '<td>'+goods[i].unitPrice+'</td>'+
+	                          '<td>'+
+	                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'<br>总进货额：'+goods[i].productionPrice+' ¥<br>总销售额：'+goods[i].sellPrice+' ¥<br>总销售量：'+goods[i].sellNumber+'<br>总利润：'+goods[i].profitPrice+' ¥<br>总折损：'+goods[i].damagePrice+' ¥" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+	                              '<button class="btn btn-primary btn-xs" data-reactid="updateGoods" data-id="'+goods[i].id+'"><i class="icon-pencil"></i></button>'+
+	                              '<button class="btn btn-danger btn-xs" data-reactid="delectGoods" data-id="'+goods[i].id+'"><i class="icon-trash "></i></button>'+
+	                          '</td>'+
+	                      '</tr>');
+		            		}
+		            		$(".popovers").click(function(){
+						    			$(this).popover({html : true});					    			
+											$(this).popover('show');
+						    		});
+						    		$("button[data-reactid='updateGoods']").click(function(){
+						    			var id = $(this).attr('data-id');
+						    			updateModal(id);
+						    		});
+						    		$("button[data-reactid='delectGoods']").click(function(){
+						    			var id = $(this).attr('data-id');
+						    			delectGoods(id);
+						    		});
+	            		}
+	            	} else if(data.code == 401){
+	            		location.href= "login.html";
 	            	} else {
 	            		console.log(data);
 	            	}
 	            },
 	            // 调用出错执行的函数
 	            error : function() {
-	                console.log('goods-update error');
+	                console.log('goods-list error');
 	            }
 	        });
-	    	}
-	    	function delectGoods(id){
+		    }    
+		    
+		    function delectGoods(id){
 	    		$.ajax({
 	            type : "DELETE",
 	            url : 'http://123.57.141.203:8314/goods?id='+id,
@@ -666,10 +439,11 @@
 	            	console.log(data);
 	            	if(data.code == 200){
 	            		var maxPage = to>0?Math.ceil((to-1)/pageSize):1;
-	            		page = page>maxPage?maxPage:page;
-	   
-	            		goods(page);
-	            		initPage(page,to);
+	            		if(page>maxPage){
+	            			goods(maxPage);
+	            			$("#mo").html(maxPage);	
+	            			$("#xiye").html(maxPage);
+	            		}	   							
 	            	} else {
 	            		console.log(data);
 	            	}
@@ -706,15 +480,36 @@
 	            }
 	        });
 	    	}
-    	});
-    	//判断当前用户是否已经登录
-    	function loginFlag(ticket){    		
-    		if(ticket == '' || ticket == undefined){
-    			location.href = 'login.html';
-    		}
-    		$("#username").html($.cookie("name"));
-    	}
-    	
+	    	function updateGoods(id){
+	    		var name =$("#_name").val().replace(/\s/g,"");
+	        var unitPrice =$("#_unitPrice").val().replace(/\s/g,"");
+	    		$.ajax({
+	            type : "PUT",
+	            url : 'http://123.57.141.203:8314/goods',
+	            contentType: "application/json; charset=utf-8",
+	            dataType:'json',
+	            data:JSON.stringify({
+	            	"id":id,
+						    "name":name,
+						    "unitPrice":unitPrice
+	            }),   
+	            headers:{
+	            	"ticket":ticket
+	            },	            
+	            success : function(data) {
+	            	if(data.code == 200){
+	            		$("#updateModal").modal('hide');  
+	            		goods(page);
+	            	} else {
+	            		console.log(data);
+	            	}
+	            },
+	            // 调用出错执行的函数
+	            error : function() {
+	                console.log('goods-update error');
+	            }
+	        });
+	    	}	 
     </script>
 
 
