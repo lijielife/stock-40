@@ -27,6 +27,36 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+    <style>
+    	.btn-info {
+		    margin-top: 8px;
+			}
+			.panel-sm{
+				margin-bottom: 5px;
+			}
+			.panel-body{
+				padding: 8px;
+			}
+			.panel-body img{
+				max-width: 100%;
+			}
+			.pie-foot{
+				  background: none;
+			    padding: 10px 0px;
+			    color: #fff;
+			    border-radius: 0 0 4px 4px;
+			    -webkit-border-radius: 0 0 4px 4px;
+			    text-align: center;
+			    font-size: 14px;
+			    font-weight: 300;
+			}
+			.bak{
+				background: #6b6b6b;
+			}
+			.yellow .pie-foot{
+				color: #000;
+			}
+    </style>
   </head>
 
   <body>
@@ -44,12 +74,7 @@
             <div class="top-nav ">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
-                    
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a href="login.html" class="btn btn-info btn-sm">登录</a>                
-                    </li>
-                    <!-- user login dropdown end -->
+                    <a href="login.html" class="btn btn-info btn-sm">登录</a>                     
                 </ul>
                 <!--search & user info end-->
             </div>
@@ -66,23 +91,128 @@
                           <div class="flat-carousal">
                               <div id="owl-demo" class="owl-carousel owl-theme">
                                   <div class="item">
-                                      <h1>演示1</h1>
+                                      <h1>管理你的店铺，就像记笔记一样简单！</h1>
                                       <div class="text-center">
-                                          <a href="javascript:;" class="view-all">演示1</a>
+                                          <a href="#lianxi" class="view-all">联系我们</a>
                                       </div>
                                   </div>
                                   <div class="item">
-                                      <h1>演示2</h1>
+                                      <h1>我想享受这种便捷的云服务！</h1>
                                       <div class="text-center">
-                                          <a href="javascript:;" class="view-all">演示2</a>
+                                          <a href="#lianxi" class="view-all">联系我们</a>
                                       </div>
                                   </div>                                  
                               </div>
                           </div>                          
                       </section>
                       <!--features carousel end-->
+                      <section class="panel panel-sm">
+                          <header class="panel-heading">功能介绍</header>                          
+                      </section>
+                      <div class="panel-group m-bot20" id="accordion">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+																				 公司状态，库存价格，销售额，利润
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse in" style="height: auto;">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+																				 每日，每月进货，销售的统计
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapseTwo" class="panel-collapse collapse">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+																				客户信息
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapseThree" class="panel-collapse collapse">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+																				供应商信息
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapse4" class="panel-collapse collapse">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+																				商品功能
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapse5" class="panel-collapse collapse">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+																				进货/销售/退货记录
+                                      </a>
+                                  </h4>
+                              </div>
+                              <div id="collapse6" class="panel-collapse collapse">
+                                  <div class="panel-body">文字描述加图片</div>
+                              </div>
+                          </div>
+                      </div>
+                      
                   </div>
-              </div>         
+              </div> 
+              <div class="row">
+                  <div class="col-lg-8">
+                      <!--latest product info start-->
+                      <section class="panel panel-sm" id="lianxi">
+                          <header class="panel-heading">联系我们</header>                          
+                      </section>
+                      <section class="panel post-wrap pro-box">
+                          <aside class="bak">
+                              <div class="post-info">
+                                  <div class="panel-body">
+                                      <img src="img/head/chenlisongabc.jpg" />
+                                  </div>
+                                  <footer class="pie-foot">微信：chenlisongabc</footer>
+                              </div>
+                          </aside>
+                          <aside class="post-highlight yellow v-align">
+                              <div class="panel-body">
+                                  <img src="img/head/chenlisongabc.jpg" />
+                              </div>
+                              <footer class="pie-foot">微信：YZQ-LC</footer>
+                          </aside>
+                      </section>
+                      <!--latest product info end-->
+                      
+                  </div>
+                  
+              </div>
 
           </section>
       </section>

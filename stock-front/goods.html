@@ -200,7 +200,7 @@
 	                              <tr>
 	                                  <th>名称</th>
 	                                  <th>库存</th>
-	                                  <th>单价</th>
+	                                  <th>库存价格</th>
 	                                  <th>操作</th>
 	                              </tr>
                               </thead>
@@ -321,9 +321,26 @@
 				$(".log-out").click(function(){//每次登录时把cookie中ticket清除
 					$.cookie("ticket", '', { expires: -1 }); 
 				});
+				$("input").focus(function(e){
+          $(this).next().remove();
+        });
 	    	function addGoods(){
 	    		var name =$("#name").val().replace(/\s/g,"");
 	        var unitPrice =$("#unitPrice").val().replace(/\s/g,"");
+	        if(name == ''){
+	            $("#name").after('<label class="error is-visible error-sm">请输入商品姓名</label>');
+	            return false;
+	        }
+	        if(unitPrice == ''){
+	            $("#unitPrice").after('<label class="error is-visible error-sm">请输入商品单价</label>');
+	            return false;
+	        }else{
+	        	var reg = /^[0-9]+([.]{1}[0-9]+){0,1}$/;
+						if (!reg.exec(unitPrice)) {							
+							$("#unitPrice").after('<label class="error is-visible error-sm">单价必须为数字</label>');
+							return false;
+						}
+	        }	  
 	    		$.ajax({
 	            type : "POST",
 	            url : 'http://123.57.141.203:8314/goods',
@@ -393,9 +410,9 @@
 		            		for(var i=0;i<goods.length;i++){
 		            			$("#goods-list").append('<tr><td>'+goods[i].name+'</td>'+
 	                          '<td>'+goods[i].number+'</td>'+
-	                          '<td>'+goods[i].unitPrice+'</td>'+
+	                          '<td><span class="badge bg-warning">'+(goods[i].productionPrice-(goods[i].sellPrice-goods[i].profitPrice))+'</span></td>'+
 	                          '<td>'+
-	                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'<br>总进货额：'+goods[i].productionPrice+' ¥<br>总销售额：'+goods[i].sellPrice+' ¥<br>总销售量：'+goods[i].sellNumber+'<br>总利润：'+goods[i].profitPrice+' ¥<br>总折损：'+goods[i].damagePrice+' ¥" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+	                              '<button data-original-title="详细信息" data-content="进货批次：'+goods[i].recordId+'<br>批次余量：'+goods[i].stockNumber+'<br>单价：'+goods[i].unitPrice+'<br>总进货额：'+goods[i].productionPrice+' ¥<br>总销售额：'+goods[i].sellPrice+' ¥<br>总销售量：'+goods[i].sellNumber+'<br>总利润：'+goods[i].profitPrice+' ¥<br>总折损：'+goods[i].damagePrice+' ¥" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
 	                              '<button class="btn btn-primary btn-xs" data-reactid="updateGoods" data-id="'+goods[i].id+'"><i class="icon-pencil"></i></button>'+
 	                              '<button class="btn btn-danger btn-xs" data-reactid="delectGoods" data-id="'+goods[i].id+'"><i class="icon-trash "></i></button>'+
 	                          '</td>'+
@@ -483,6 +500,20 @@
 	    	function updateGoods(id){
 	    		var name =$("#_name").val().replace(/\s/g,"");
 	        var unitPrice =$("#_unitPrice").val().replace(/\s/g,"");
+	        if(name == ''){
+	            $("#_name").after('<label class="error is-visible error-sm">请输入商品姓名</label>');
+	            return false;
+	        }
+	        if(unitPrice == ''){
+	            $("#_unitPrice").after('<label class="error is-visible error-sm">请输入商品单价</label>');
+	            return false;
+	        }else{
+	        	var reg = /^[0-9]+([.]{1}[0-9]+){0,1}$/;
+						if (!reg.exec(unitPrice)) {							
+							$("#_unitPrice").after('<label class="error is-visible error-sm">单价必须为数字</label>');
+							return false;
+						}
+	        }	        
 	    		$.ajax({
 	            type : "PUT",
 	            url : 'http://123.57.141.203:8314/goods',

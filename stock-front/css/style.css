@@ -1111,7 +1111,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 /*badge*/
-
+.badge{
+	border-radius: 0;
+}
 .badge.bg-primary {
     background: #8075c4;
 }
@@ -3997,7 +3999,7 @@ span.customSelect.changed {
 .fenye ul li {
 	float: left;
 	margin-left: 5px;
-	padding: 4px 6px;
+	padding: 4px 4px;
 	border: 1px solid #ccc;
 	font-weight: bold;
 	cursor: pointer;
@@ -4044,4 +4046,36 @@ span.customSelect.changed {
 	text-align: center;
 	line-height: 20px;
     height: 28px;
+}
+/*input提示语*/
+.error{/*登录注册*/
+    position: absolute;
+    top: 0;
+    right: 8px;
+    padding: 0 8px;
+    line-height: 39px;
+    color: #c33;
+    cursor: text;
+    margin-bottom: 0;
+    font-weight: 400;
+    visibility: hidden;
+    opacity: 0;
+    -ms-filter: "alpha(Opacity=0)";
+    -webkit-transform: translate(20px,0);
+    -ms-transform: translate(20px,0);
+    transform: translate(20px,0);
+    -webkit-transition: .25s ease-out;
+    transition: .25s ease-out;
+}
+label.error.is-visible {
+    visibility: visible;
+    opacity: 1;
+    -ms-filter: "alpha(Opacity=100)";
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    transform: translate(0,0);
+}
+.error-sm{
+	line-height: 34px;
+    right: 15px;
 }

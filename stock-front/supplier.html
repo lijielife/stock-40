@@ -159,7 +159,7 @@
 									                                  <div class="form-group">
 									                                      <label class="col-lg-2 control-label">手机号</label>
 									                                      <div class="col-lg-10">
-									                                          <input type="text" placeholder="" id="mobile" class="form-control">
+									                                          <input type="tel" placeholder="" id="mobile" class="form-control">
 									                                      </div>
 									                                  </div>
 									                                  <div class="form-group">
@@ -197,6 +197,7 @@
 	                              <tr>
 	                                  <th>姓名</th>
 	                                  <th>手机号</th>
+	                                  <th>进货费</th>
 	                                  <th>操作</th>
 	                              </tr>
                               </thead>
@@ -330,6 +331,9 @@
 				$(".log-out").click(function(){//每次登录时把cookie中ticket清除
 					$.cookie("ticket", '', { expires: -1 }); 
 				});
+				$("input").focus(function(e){
+          $(this).next().remove();
+        });
     	});
     	//判断当前用户是否已经登录
     	function loginFlag(ticket){    		
@@ -370,9 +374,10 @@
 	            			var suppliers = data.data;
 		            		for(var i=0;i<suppliers.length;i++){
 		            			$("#customers-list").append('<tr><td>'+suppliers[i].name+'</td>'+
-	                          '<td>'+suppliers[i].mobile+'</td>'+
+	                          '<td><a href="tel:'+suppliers[i].mobile+'" class="btn btn-primary btn-xs btn-m"><i class="icon-phone"></i>-'+suppliers[i].mobile.substr(7,4)+'</a></td>'+
+	                          '<td><span class="badge bg-important">'+suppliers[i].productionPrice+'</span></td>'+
 	                          '<td>'+
-	                              '<button data-original-title="详细信息" data-content="公司名称：'+suppliers[i].company+'<br>总进货额：'+suppliers[i].productionPrice+' ¥<br>总进货量：'+suppliers[i].number+'<br>总利润：'+suppliers[i].profitPrice+' ¥<br>总折损：'+suppliers[i].damagePrice+' ¥<br>备注：'+suppliers[i].remark+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+	                              '<button data-original-title="详细信息" data-content="公司名称：'+suppliers[i].company+'<br>总进货量：'+suppliers[i].number+'<br>总折损：'+suppliers[i].damagePrice+' ¥<br>备注：'+suppliers[i].remark+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
 	                              '<button class="btn btn-primary btn-xs" data-reactid="updateSupplier" data-id="'+suppliers[i].id+'"><i class="icon-pencil"></i></button>'+
 	                              '<button class="btn btn-danger btn-xs" data-reactid="delectSupplier" data-id="'+suppliers[i].id+'"><i class="icon-trash "></i></button>'+
 	                          '</td>'+
@@ -406,6 +411,24 @@
         var mobile =$("#mobile").val().replace(/\s/g,"");
         var company = $("#company").val().replace(/\s/g,"");
         var remark = $("#remark").val().replace(/\s/g,"");
+        if(name == ''){
+            $("#name").after('<label class="error is-visible error-sm">请输入供应商姓名</label>');
+            return false;
+        }
+        if(mobile == ''){
+            $("#mobile").after('<label class="error is-visible error-sm">请输入供应商手机号</label>');
+            return false;
+        }else{
+        	var reg = /^1[0-9]{10}$/;
+					if (!reg.exec(mobile)) {							
+						$("#mobile").after('<label class="error is-visible error-sm">手机号不合法</label>');
+						return false;
+					}
+        }
+        if(company == ''){
+            $("#company").after('<label class="error is-visible error-sm">请输入公司名称</label>');
+            return false;
+        }
     		$.ajax({
             type : "POST",
             url : 'http://123.57.141.203:8314/customers',
@@ -441,6 +464,24 @@
         var mobile =$("#_mobile").val().replace(/\s/g,"");
         var company = $("#_company").val().replace(/\s/g,"");
         var remark = $("#_remark").val().replace(/\s/g,"");
+        if(name == ''){
+            $("#_name").after('<label class="error is-visible error-sm">请输入供应商姓名</label>');
+            return false;
+        }
+        if(mobile == ''){
+            $("#_mobile").after('<label class="error is-visible error-sm">请输入供应商手机号</label>');
+            return false;
+        }else{
+        	var reg = /^1[0-9]{10}$/;
+					if (!reg.exec(mobile)) {							
+						$("#_mobile").after('<label class="error is-visible error-sm">手机号不合法</label>');
+						return false;
+					}
+        }
+        if(company == ''){
+            $("#_company").after('<label class="error is-visible error-sm">请输入公司名称</label>');
+            return false;
+        }
     		$.ajax({
             type : "PUT",
             url : 'http://123.57.141.203:8314/customers',
