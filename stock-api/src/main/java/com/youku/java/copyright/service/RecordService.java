@@ -89,7 +89,6 @@ public class RecordService {
 		good.setStockNumber(recordGood.getStockNumber());
 		good.setProfitPrice(good.getProfitPrice() + recordGood.getProfitPrice());
 		good.setSellPrice(good.getSellPrice() + record.getSellPrice());
-		good.setProductionPrice(good.getProductionPrice() - recordGood.getProductionPrice());
 
 		//插入记录数据
 		record.setType(RecordType.SELL);
