@@ -115,7 +115,8 @@
 	<select id="selectByTime" parameterType="Map" resultMap="statUserDayMap">
 		SELECT * 
 		FROM t_stat_user_day
-		where time &gt;= #{beginTime}
+		where fk_user_id = #{userId}
+		and time &gt;= #{beginTime}
 		and time &lt;= #{endTime}
 		order by time asc
 	</select>

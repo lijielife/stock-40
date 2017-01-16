@@ -124,11 +124,11 @@ public class StatUserService {
 		return statUserDayMapper.selectById(time, id, limit);
 	}
 	
-	public List<StatUser> selectByTime(Date begin, Date end, int timeType) {
+	public List<StatUser> selectByTime(long userId, Date begin, Date end, int timeType) {
 		if(timeType == TimeType.DAY) {
-			return statUserDayMapper.selectByTime(begin, end);
+			return statUserDayMapper.selectByTime(userId, begin, end);
 		}else if(timeType == TimeType.MONTH) {
-			return statUserMonthMapper.selectByTime(begin, end);
+			return statUserMonthMapper.selectByTime(userId, begin, end);
 		}
 		return null;
 	}
@@ -161,19 +161,6 @@ public class StatUserService {
 			}
 		}
 		
-//		for(long i = begin.getTime(); i <= end.getTime(); i+=length) {
-//			StatUser temp = new StatUser();
-//			temp.setTime(DateTool.standardSdf().format(new Date(i)));
-//			if(statUsers != null && statUsers.size() > 0) {
-//				productionList: for(StatUser statUser : statUsers) {
-//					if((statUser.getTime().getTime()/length) == (temp.getTime().getTime()/length)) {
-//						temp = statUser;
-//						break productionList;
-//					}
-//				}
-//			}
-//			list.add(temp);
-//		}
 		return list;
 	}
 }

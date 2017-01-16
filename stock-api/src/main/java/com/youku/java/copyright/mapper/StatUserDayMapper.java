@@ -15,5 +15,6 @@ public interface StatUserDayMapper extends MapperI<StatUser>{
 	
 	public List<StatUser> selectById(@Param("time")Date time, @Param("id")long id, @Param("limit")int limit);
 	
-	public List<StatUser> selectByTime(@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
+	public List<StatUser> selectByTime(@Param("userId") long userId, @Param("beginTime") Date beginTime, 
+			@Param("endTime") Date endTime);
 }

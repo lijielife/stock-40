@@ -13,6 +13,7 @@ public interface StatUserMonthMapper extends MapperI<StatUser>{
 	
 	public StatUser selectLast();
 	
-	public List<StatUser> selectByTime(@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
+	public List<StatUser> selectByTime(@Param("userId")long userId, @Param("beginTime") Date beginTime, 
+			@Param("endTime") Date endTime);
 
 }

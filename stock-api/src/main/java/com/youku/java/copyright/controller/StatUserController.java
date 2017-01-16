@@ -59,7 +59,7 @@ public class StatUserController extends BaseController{
 			throw new InvalidArgumentException("请传入参数时间类型");
 		}
 		
-		List<StatUser> statUsers = statUserService.selectByTime(begin, end, timeType);
+		List<StatUser> statUsers = statUserService.selectByTime(loginInfo.getId(), begin, end, timeType);
 		
 		result.put("data", statUserService.fillingTime(statUsers, begin, end, timeType));
 		return result;

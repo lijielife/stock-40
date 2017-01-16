@@ -106,7 +106,8 @@
 	<select id="selectByTime" parameterType="Map" resultMap="statUserMonthMap">
 		SELECT * 
 		FROM t_stat_user_month
-		where time &gt;= #{beginTime}
+		where fk_user_id = #{userId}
+		and time &gt;= #{beginTime}
 		and time &lt;= #{endTime}
 		order by time asc
 	</select>
