@@ -216,7 +216,7 @@
 											                    </ul>
 											                </div>
 											            </li>
-											            <li id="down" onclick="downclick()">下一页</a></li>
+											            <li id="down" onclick="downclick()">下一页</li>
 											            <li id="last">末页</li>
 											        </ul>
 											    
@@ -395,8 +395,10 @@
 	            			$("#customers-list").append('<tr><td style="text-align: center;" colspan=3>没有找到您需要的数据！</td></tr>');
 	            		}
 	            		
-	            	} else {
+	            	} else if(data.code == 401){
 	            		location.href= "login.html";
+	            	} else {
+	            		console.log(data);
 	            	}
 	            },
 	            // 调用出错执行的函数
@@ -524,8 +526,8 @@
             	console.log(data);
             	if(data.code == 200){
             		var maxPage = to>0?Math.ceil((to-1)/pageSize):1;
-            		if(page>maxPage){
-            			customers(maxPage);
+            		customers(maxPage);
+            		if(page>maxPage){            			
             			$("#mo").html(maxPage);	
             			$("#xiye").html(maxPage);
             		}	 

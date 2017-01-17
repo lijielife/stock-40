@@ -208,7 +208,7 @@
 											                    </ul>
 											                </div>
 											            </li>
-											            <li id="down" onclick="downclick()">下一页</a></li>
+											            <li id="down" onclick="downclick()">下一页</li>
 											            <li id="last">末页</li>
 											        </ul>
 											    
@@ -302,12 +302,17 @@
 	                          '<td>'+costMoney(records[i])+'</td>'+
 	                          '<td>'+
 	                              '<button data-original-title="详细信息" data-content="'+details(records[i])+'" data-placement="left" data-trigger="hover" class="btn btn-success btn-xs popovers">详情</button>'+
+	                          		'<button class="btn btn-danger btn-xs" data-reactid="delectRecords" data-id="'+records[i].id+'"><i class="icon-trash "></i></button>'+
 	                          '</td>'+
 	                      '</tr>');
 		            		}
 		            		$(".popovers").click(function(){
 						    			$(this).popover({html : true});					    			
 											$(this).popover('show');
+						    		});
+						    		$("button[data-reactid='delectRecords']").click(function(){
+						    			var id = $(this).attr('data-id');
+						    			delectRecords(id);
 						    		});
 	            		}	            							    		
 	            	} else if(data.code == 401){
@@ -322,7 +327,34 @@
 	                console.log('customers-list error');
 	            }
 	        });
-	    } 
+	    } 	    
+	    function delectRecords(id){
+    		$.ajax({
+            type : "DELETE",
+            url : 'http://123.57.141.203:8314/records?id='+id,
+            dataType:'json',
+            headers:{
+            	"ticket":ticket
+            },	            
+            success : function(data) {
+            	console.log(data);
+            	if(data.code == 200){
+            		var maxPage = to>0?Math.ceil((to-1)/pageSize):1;
+            		records(maxPage);
+            		if(page>maxPage){            			
+            			$("#mo").html(maxPage);	
+            			$("#xiye").html(maxPage);
+            		}	   							
+            	} else {
+            		console.log(data);
+            	}
+            },
+            // 调用出错执行的函数
+            error : function() {
+                console.log('goods-delect error');
+            }
+        });
+    	}
 	    function costMoney(record){
 	    	if(record.type == 1){
 	    		return '<span class="badge bg-important">-'+(record.productionPrice+record.otherPrice)+'</span>';

@@ -220,7 +220,7 @@
 											                    </ul>
 											                </div>
 											            </li>
-											            <li id="down" onclick="downclick()">下一页</a></li>
+											            <li id="down" onclick="downclick()">下一页</li>
 											            <li id="last">末页</li>
 											        </ul>
 											    
@@ -456,8 +456,8 @@
 	            	console.log(data);
 	            	if(data.code == 200){
 	            		var maxPage = to>0?Math.ceil((to-1)/pageSize):1;
-	            		if(page>maxPage){
-	            			goods(maxPage);
+	            		goods(maxPage);
+	            		if(page>maxPage){	            			
 	            			$("#mo").html(maxPage);	
 	            			$("#xiye").html(maxPage);
 	            		}	   							

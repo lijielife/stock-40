@@ -524,8 +524,8 @@
             	console.log(data);
             	if(data.code == 200){
             		var maxPage = to>0?Math.ceil((to-1)/pageSize):1;
-            		if(page>maxPage){
-            			customers(maxPage);
+            		customers(maxPage);
+            		if(page>maxPage){            			
             			$("#mo").html(maxPage);	
             			$("#xiye").html(maxPage);
             		}	 
