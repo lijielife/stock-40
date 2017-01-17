@@ -13,6 +13,7 @@ import com.youku.java.copyright.bean.Customer;
 import com.youku.java.copyright.bean.Good;
 import com.youku.java.copyright.bean.Record;
 import com.youku.java.copyright.bean.User;
+import com.youku.java.copyright.exception.PermissionDeniedException;
 import com.youku.java.copyright.mapper.RecordMapper;
 import com.youku.java.copyright.util.CommonUtil;
 import com.youku.java.copyright.util.Constant.RecordType;
@@ -40,6 +41,44 @@ public class RecordService {
 		return recordMapper.selectOne(id);
 	}
 	
+	public void delete(long id, User loginInfo) {
+		
+		Record record = selectOne(id);
+		if(record == null) {
+			throw new InvalidArgumentException("找不到的记录");
+		}else if(record.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new PermissionDeniedException("权限不足");
+		}
+		
+		Date today = DateTool.getBegin(new Date());
+		if(record.getCreateTime().getTime() < today.getTime()) {
+			throw new InvalidArgumentException("只能删除今天创建的数据");
+		}
+		
+		if(record.getType() == RecordType.STOCK) {
+			List<Record> list = selectById(record.getId(), record.getUserId(), RecordType.STOCK, 1);
+			if(list != null && list.size() > 0) {
+				throw new InvalidArgumentException("请先删除最新进货记录");
+			}
+			
+			stockRollBack(record, loginInfo);
+		}else if(record.getType() == RecordType.SELL) {
+			List<Record> list = selectById(record.getId(), record.getUserId(), RecordType.SELL, 1);
+			if(list != null && list.size() > 0) {
+				throw new InvalidArgumentException("请先删除最新销售记录");
+			}
+			
+			sellRollBack(record, loginInfo);
+		}else if(record.getType() == RecordType.DAMAGE) {
+			List<Record> list = selectById(record.getId(), record.getUserId(), RecordType.DAMAGE, 1);
+			if(list != null && list.size() > 0) {
+				throw new InvalidArgumentException("请先删除最新折损记录");
+			}
+			
+			damageRollBack(record, loginInfo);
+		}
+	}
+	
 	/**
 	 * 进货
 	 * 插入记录数据
@@ -64,6 +103,31 @@ public class RecordService {
 		customerService.updatePrice(record.getCustomerId(), record.getProductionPrice(), record.getNumber(), 
 				0.0, 0, 0.0, 0.0);
 		return record.getId();
+	}
+	
+	public void stockRollBack(Record record, User loginInfo) {
+		
+		//影响用户产品费用
+		userService.updatePrice(record.getUserId(), 
+				record.getProductionPrice() * -1, record.getOtherPrice() * -1, 0.0, 0.0, 0.0);
+		
+		//影响商品数量，记录ID，记录剩余数量
+		Good good = goodService.selectOne(record.getGoodId());
+		if(good.getRecordId().longValue() == record.getId().longValue()) {
+			if(good.getStockNumber().intValue() != record.getNumber().intValue()) {
+				throw new InvalidArgumentException("本次进货已被售出，无法删除");
+			}
+			good.setStockNumber(0);
+			good.setRecordId(selectFrontRecordId(record.getId(), record.getUserId()));
+		}
+		good.setNumber(good.getNumber() - record.getNumber());
+		good.setProductionPrice(good.getProductionPrice() - record.getProductionPrice());
+		goodService.update(good, loginInfo);
+		
+		customerService.updatePrice(record.getCustomerId(), record.getProductionPrice() * -1, record.getNumber() * -1, 
+				0.0, 0, 0.0, 0.0);
+		
+		deleteById(record.getId(), loginInfo);
 	}
 	
 	/**
@@ -108,6 +172,71 @@ public class RecordService {
 		customerService.updatePrice(record.getCustomerId(), 0.0, 0, record.getSellPrice(), 
 				record.getNumber(), profitPrice, 0.0);
 		return record.getId();
+	}
+	
+	public void sellRollBack(Record record, User loginInfo) {
+		Good good = goodService.selectOne(record.getGoodId());
+		good.setSellNumber(good.getSellNumber() - record.getNumber());
+		good.setNumber(good.getNumber() + record.getNumber());
+		good.setProfitPrice(good.getProfitPrice() - record.getProfitPrice());
+		good.setSellPrice(good.getSellPrice() - record.getSellPrice());
+		updateStock(record, good);
+		goodService.update(good, loginInfo);
+		
+		userService.updatePrice(loginInfo.getId(), 0.0, 0.0, record.getSellPrice() * -1, 0.0, 
+				record.getProfitPrice() * -1);
+		
+		customerService.updatePrice(record.getCustomerId(), 0.0, 0, record.getSellPrice() * -1, 
+				record.getNumber() * -1, record.getProfitPrice() * -1, 0.0);
+		
+		deleteById(record.getId(), loginInfo);
+	}
+	
+	
+	/**
+	 * 退货处理
+	 * 插入记录数据
+	 * 影响用户折损费
+	 */
+	public long damage(Record record, User loginInfo) {
+		//插入记录数据
+		record.setType(RecordType.DAMAGE);
+		record.setUserId(loginInfo.getId());
+		record.setCreateTime(DateTool.standardSdf().format(new Date()));
+		CommonUtil.setDefaultValue(record);
+		recordMapper.insert(record);
+		
+		//影响用户产品费用
+		userService.updatePrice(loginInfo.getId(), 
+				0.0, 0.0, 0.0, record.getDamagePrice(), 0.0);
+		
+		//更新商品折损费
+		if(record.getGoodId() > 0) {
+			Good good = goodService.selectOne(record.getGoodId());
+			good.setDamagePrice(good.getDamagePrice() + record.getDamagePrice());
+			goodService.update(good, loginInfo);
+		}
+		
+		customerService.updatePrice(record.getCustomerId(), 0.0, 0, 0.0, 0, 0.0, record.getDamagePrice());
+		return record.getId();
+	}
+	
+	public void damageRollBack(Record record, User loginInfo) {
+		//影响用户产品费用
+		userService.updatePrice(loginInfo.getId(), 
+					0.0, 0.0, 0.0, record.getDamagePrice() * -1, 0.0);
+		
+
+		//更新商品折损费
+		if(record.getGoodId() > 0) {
+			Good good = goodService.selectOne(record.getGoodId());
+			good.setDamagePrice(good.getDamagePrice() - record.getDamagePrice());
+			goodService.update(good, loginInfo);
+		}
+		
+		customerService.updatePrice(record.getCustomerId(), 0.0, 0, 0.0, 0, 0.0, record.getDamagePrice() * -1);
+		
+		deleteById(record.getId(), loginInfo);
 	}
 	
 	/**
@@ -165,37 +294,43 @@ public class RecordService {
 		return good;
 	}
 	
+	public void updateStock(Record record, Good good) {
+		
+		//需要回滚的数量
+		//遍历record进货记录找到recordId，和剩余数
+		int rollBackNumber = record.getNumber();
+		long recordId = record.getId();
+	
+		do {
+			List<Record> records = recordMapper.selectFrontById(recordId, record.getUserId(), 
+					RecordType.STOCK, 10);
+			if(records == null || records.size() <= 0) {
+				good.setStockNumber(0);
+				good.setRecordId(0l);
+				rollBackNumber = 0;
+			}
+			for(Record temp : records) {
+				rollBackNumber -= temp.getNumber();
+				
+				if(rollBackNumber <= 0) {
+					good.setStockNumber(good.getStockNumber() + temp.getNumber() - (rollBackNumber * -1));
+					good.setRecordId(temp.getId());
+				}
+			}
+			
+		} while (rollBackNumber > 0);
+	}
+	
 	public List<Record> selectById(long id, long userId, int type, int limit) {
 		return recordMapper.selectById(id, userId, type, limit);
 	}
 	
-	
-	/**
-	 * 退货处理
-	 * 插入记录数据
-	 * 影响用户折损费
-	 */
-	public long damage(Record record, User loginInfo) {
-		//插入记录数据
-		record.setType(RecordType.DAMAGE);
-		record.setUserId(loginInfo.getId());
-		record.setCreateTime(DateTool.standardSdf().format(new Date()));
-		CommonUtil.setDefaultValue(record);
-		recordMapper.insert(record);
-		
-		//影响用户产品费用
-		userService.updatePrice(loginInfo.getId(), 
-				0.0, 0.0, 0.0, record.getDamagePrice(), 0.0);
-		
-		//更新商品折损费
-		if(record.getGoodId() > 0) {
-			Good good = goodService.selectOne(record.getGoodId());
-			good.setDamagePrice(good.getDamagePrice() + record.getDamagePrice());
-			goodService.update(good, loginInfo);
+	public long selectFrontRecordId(long recordId, long userId) {
+		Record record = recordMapper.selectFrontRecordId(recordId, userId);
+		if(record != null) {
+			return record.getId();
 		}
-		
-		customerService.updatePrice(record.getCustomerId(), 0.0, 0, 0.0, 0, 0.0, record.getDamagePrice());
-		return record.getId();
+		return 0l;
 	}
 	
 	public List<Record> selectByUserid(User loginInfo, int type, int page, int pageSize) {
@@ -230,6 +365,15 @@ public class RecordService {
 		}
 		
 		return recordViews;
+	}
+	
+	public void deleteById(long id, User loginInfo) {
+		Record record = selectOne(id);
+		if(record.getUserId().longValue() != loginInfo.getId().longValue()) {
+			throw new PermissionDeniedException("没有权限");
+		}
+		
+		recordMapper.delete(id);
 	}
 	
 }

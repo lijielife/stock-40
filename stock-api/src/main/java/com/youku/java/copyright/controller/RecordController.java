@@ -50,7 +50,7 @@ public class RecordController extends BaseController{
 	}
 
 	@RequestMapping(value = "/records", method = RequestMethod.GET)
-	public Object loginInfo(User loginInfo, 
+	public Object get(User loginInfo, 
 			@RequestParam(required = false, value = "id", defaultValue = "0") long id, 
 			@RequestParam(required = false, value = "type", defaultValue = "0") int type, 
 			@RequestParam(required = false, value = "page", defaultValue = "1") int page, 
@@ -78,6 +78,23 @@ public class RecordController extends BaseController{
 			throw new InvalidArgumentException("找不到的查询条件");
 		}
 
+		return result;
+	}
+	
+
+
+	@RequestMapping(value = "/records", method = RequestMethod.DELETE)
+	public Object delete(User loginInfo, 
+			@RequestParam(required = false, value = "id", defaultValue = "0") long id){
+		Map<String,Object> result = new HashMap<String, Object>();
+		
+		if(id > 0) {
+			recordService.delete(id, loginInfo);
+		}else {
+			throw new InvalidArgumentException("找不到的删除条件");
+		}
+
+		result.put("id", id);
 		return result;
 	}
 }
